@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ComunidadeRouteImport } from './routes/comunidade'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as ConquistasRouteImport } from './routes/conquistas'
 import { Route as EstatisticasRouteImport } from './routes/estatisticas'
 import { Route as ListasRouteImport } from './routes/listas'
@@ -30,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const ComunidadeRoute = ComunidadeRouteImport.update({
   id: '/comunidade',
   path: '/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConquistasRoute = ConquistasRouteImport.update({
@@ -86,6 +92,7 @@ const TreinarAreaRoute = TreinarAreaRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/comunidade': typeof ComunidadeRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
@@ -100,6 +107,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/comunidade': typeof ComunidadeRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
@@ -115,6 +123,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/comunidade': typeof ComunidadeRoute
+  '/configuracoes': typeof ConfiguracoesRoute
   '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/comunidade'
+    | '/configuracoes'
     | '/conquistas'
     | '/estatisticas'
     | '/listas'
@@ -145,6 +155,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/comunidade'
+    | '/configuracoes'
     | '/conquistas'
     | '/estatisticas'
     | '/listas'
@@ -159,6 +170,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/comunidade'
+    | '/configuracoes'
     | '/conquistas'
     | '/estatisticas'
     | '/listas'
@@ -174,6 +186,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ComunidadeRoute: typeof ComunidadeRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
   ConquistasRoute: typeof ConquistasRoute
   EstatisticasRoute: typeof EstatisticasRoute
   ListasRoute: typeof ListasRoute
@@ -200,6 +213,13 @@ declare module '@tanstack/react-router' {
       path: '/comunidade'
       fullPath: '/comunidade'
       preLoaderRoute: typeof ComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conquistas': {
@@ -278,6 +298,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ComunidadeRoute: ComunidadeRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
   ConquistasRoute: ConquistasRoute,
   EstatisticasRoute: EstatisticasRoute,
   ListasRoute: ListasRoute,
