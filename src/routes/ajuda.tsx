@@ -81,7 +81,10 @@ function Ajuda() {
               tone="action"
               className="mt-3"
               onClick={() => {
-                if (!mensagem.trim()) return toast.error("Escreva sua mensagem.");
+                if (!mensagem.trim()) {
+                  toast.error("Escreva sua mensagem.");
+                  return;
+                }
                 setMensagem("");
                 toast.success("Mensagem enviada! Respondemos em até 1 dia útil.");
               }}

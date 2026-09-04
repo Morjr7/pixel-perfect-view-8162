@@ -34,7 +34,7 @@ function Inicio() {
   const metaPct = Math.min(100, Math.round((respondidasHoje / estado.metaDiaria) * 100));
   const posicao = RANKING.filter((r) => r.xp > estado.xp).length + 1;
 
-  const fraca = [...stats.porArea].sort((a, b) => a.aproveitamento - b.aproveitamento)[0];
+  const fraca = [...stats.porArea].sort((a, b) => a.aproveitamento - b.aproveitamento)[0]!;
 
   return (
     <AppShell>

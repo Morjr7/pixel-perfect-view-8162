@@ -33,7 +33,7 @@ const COMPETENCIAS = [
 
 function Redacao() {
   const { estado, salvarRedacao } = useProgresso();
-  const [tema, setTema] = useState(TEMAS_REDACAO[0]);
+  const [tema, setTema] = useState(TEMAS_REDACAO[0]!);
   const [texto, setTexto] = useState("");
 
   useEffect(() => {

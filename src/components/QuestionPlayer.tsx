@@ -25,7 +25,7 @@ export function QuestionPlayer({ questoes, titulo, modo, onFinalizar }: Props) {
   const [chat, setChat] = useState(false);
   const [terminou, setTerminou] = useState(false);
 
-  const questao = questoes[indice];
+  const questao = questoes[indice]!;
   const area = areaById(questao.area);
 
   const acertos = useMemo(

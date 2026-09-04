@@ -124,7 +124,7 @@ function Listas() {
                 </div>
                 <div className="ml-auto flex items-center gap-2">
                   <PopButton asChild tone="action" size="sm">
-                    <Link to="/treinar/$area" params={{ area: l.areas[0] }}>
+                    <Link to="/treinar/$area" params={{ area: l.areas[0]! }}>
                       Treinar
                     </Link>
                   </PopButton>

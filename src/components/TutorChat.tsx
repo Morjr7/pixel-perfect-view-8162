@@ -14,7 +14,7 @@ export function TutorChat({
   contexto?: string;
   alto?: boolean;
 }) {
-  const tutor = TUTORES.find((t) => t.area === area) ?? TUTORES[0];
+  const tutor = TUTORES.find((t) => t.area === area) ?? TUTORES[0]!;
   const [msgs, setMsgs] = useState<Msg[]>([
     {
       de: "tutor",
