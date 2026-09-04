@@ -10,33 +10,219 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AjudaRouteImport } from './routes/ajuda'
+import { Route as ComunidadeRouteImport } from './routes/comunidade'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as ConquistasRouteImport } from './routes/conquistas'
+import { Route as EntrarRouteImport } from './routes/entrar'
+import { Route as EstatisticasRouteImport } from './routes/estatisticas'
+import { Route as ListasRouteImport } from './routes/listas'
+import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as RankingRouteImport } from './routes/ranking'
+import { Route as RedacaoRouteImport } from './routes/redacao'
+import { Route as SimuladosRouteImport } from './routes/simulados'
+import { Route as VideosRouteImport } from './routes/videos'
+import { Route as TreinarIndexRouteImport } from './routes/treinar/index'
+import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AjudaRoute = AjudaRouteImport.update({
+  id: '/ajuda',
+  path: '/ajuda',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComunidadeRoute = ComunidadeRouteImport.update({
+  id: '/comunidade',
+  path: '/comunidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConquistasRoute = ConquistasRouteImport.update({
+  id: '/conquistas',
+  path: '/conquistas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EntrarRoute = EntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstatisticasRoute = EstatisticasRouteImport.update({
+  id: '/estatisticas',
+  path: '/estatisticas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListasRoute = ListasRouteImport.update({
+  id: '/listas',
+  path: '/listas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedacaoRoute = RedacaoRouteImport.update({
+  id: '/redacao',
+  path: '/redacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimuladosRoute = SimuladosRouteImport.update({
+  id: '/simulados',
+  path: '/simulados',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TreinarIndexRoute = TreinarIndexRouteImport.update({
+  id: '/treinar/',
+  path: '/treinar/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TreinarAreaRoute = TreinarAreaRouteImport.update({
+  id: '/treinar/$area',
+  path: '/treinar/$area',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ajuda': typeof AjudaRoute
+  '/comunidade': typeof ComunidadeRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/conquistas': typeof ConquistasRoute
+  '/entrar': typeof EntrarRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/listas': typeof ListasRoute
+  '/perfil': typeof PerfilRoute
+  '/ranking': typeof RankingRoute
+  '/redacao': typeof RedacaoRoute
+  '/simulados': typeof SimuladosRoute
+  '/videos': typeof VideosRoute
+  '/treinar/$area': typeof TreinarAreaRoute
+  '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ajuda': typeof AjudaRoute
+  '/comunidade': typeof ComunidadeRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/conquistas': typeof ConquistasRoute
+  '/entrar': typeof EntrarRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/listas': typeof ListasRoute
+  '/perfil': typeof PerfilRoute
+  '/ranking': typeof RankingRoute
+  '/redacao': typeof RedacaoRoute
+  '/simulados': typeof SimuladosRoute
+  '/videos': typeof VideosRoute
+  '/treinar/$area': typeof TreinarAreaRoute
+  '/treinar': typeof TreinarIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ajuda': typeof AjudaRoute
+  '/comunidade': typeof ComunidadeRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/conquistas': typeof ConquistasRoute
+  '/entrar': typeof EntrarRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/listas': typeof ListasRoute
+  '/perfil': typeof PerfilRoute
+  '/ranking': typeof RankingRoute
+  '/redacao': typeof RedacaoRoute
+  '/simulados': typeof SimuladosRoute
+  '/videos': typeof VideosRoute
+  '/treinar/$area': typeof TreinarAreaRoute
+  '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/ajuda'
+    | '/comunidade'
+    | '/configuracoes'
+    | '/conquistas'
+    | '/entrar'
+    | '/estatisticas'
+    | '/listas'
+    | '/perfil'
+    | '/ranking'
+    | '/redacao'
+    | '/simulados'
+    | '/videos'
+    | '/treinar/$area'
+    | '/treinar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/ajuda'
+    | '/comunidade'
+    | '/configuracoes'
+    | '/conquistas'
+    | '/entrar'
+    | '/estatisticas'
+    | '/listas'
+    | '/perfil'
+    | '/ranking'
+    | '/redacao'
+    | '/simulados'
+    | '/videos'
+    | '/treinar/$area'
+    | '/treinar'
+  id:
+    | '__root__'
+    | '/'
+    | '/ajuda'
+    | '/comunidade'
+    | '/configuracoes'
+    | '/conquistas'
+    | '/entrar'
+    | '/estatisticas'
+    | '/listas'
+    | '/perfil'
+    | '/ranking'
+    | '/redacao'
+    | '/simulados'
+    | '/videos'
+    | '/treinar/$area'
+    | '/treinar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AjudaRoute: typeof AjudaRoute
+  ComunidadeRoute: typeof ComunidadeRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
+  ConquistasRoute: typeof ConquistasRoute
+  EntrarRoute: typeof EntrarRoute
+  EstatisticasRoute: typeof EstatisticasRoute
+  ListasRoute: typeof ListasRoute
+  PerfilRoute: typeof PerfilRoute
+  RankingRoute: typeof RankingRoute
+  RedacaoRoute: typeof RedacaoRoute
+  SimuladosRoute: typeof SimuladosRoute
+  VideosRoute: typeof VideosRoute
+  TreinarAreaRoute: typeof TreinarAreaRoute
+  TreinarIndexRoute: typeof TreinarIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +234,123 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ajuda': {
+      id: '/ajuda'
+      path: '/ajuda'
+      fullPath: '/ajuda'
+      preLoaderRoute: typeof AjudaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comunidade': {
+      id: '/comunidade'
+      path: '/comunidade'
+      fullPath: '/comunidade'
+      preLoaderRoute: typeof ComunidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conquistas': {
+      id: '/conquistas'
+      path: '/conquistas'
+      fullPath: '/conquistas'
+      preLoaderRoute: typeof ConquistasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/entrar': {
+      id: '/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof EntrarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estatisticas': {
+      id: '/estatisticas'
+      path: '/estatisticas'
+      fullPath: '/estatisticas'
+      preLoaderRoute: typeof EstatisticasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/listas': {
+      id: '/listas'
+      path: '/listas'
+      fullPath: '/listas'
+      preLoaderRoute: typeof ListasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/redacao': {
+      id: '/redacao'
+      path: '/redacao'
+      fullPath: '/redacao'
+      preLoaderRoute: typeof RedacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulados': {
+      id: '/simulados'
+      path: '/simulados'
+      fullPath: '/simulados'
+      preLoaderRoute: typeof SimuladosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/treinar/': {
+      id: '/treinar/'
+      path: '/treinar'
+      fullPath: '/treinar/'
+      preLoaderRoute: typeof TreinarIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/treinar/$area': {
+      id: '/treinar/$area'
+      path: '/treinar/$area'
+      fullPath: '/treinar/$area'
+      preLoaderRoute: typeof TreinarAreaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AjudaRoute: AjudaRoute,
+  ComunidadeRoute: ComunidadeRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
+  ConquistasRoute: ConquistasRoute,
+  EntrarRoute: EntrarRoute,
+  EstatisticasRoute: EstatisticasRoute,
+  ListasRoute: ListasRoute,
+  PerfilRoute: PerfilRoute,
+  RankingRoute: RankingRoute,
+  RedacaoRoute: RedacaoRoute,
+  SimuladosRoute: SimuladosRoute,
+  VideosRoute: VideosRoute,
+  TreinarAreaRoute: TreinarAreaRoute,
+  TreinarIndexRoute: TreinarIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
