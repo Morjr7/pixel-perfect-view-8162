@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TreinarIndexRouteImport } from './routes/treinar/index'
+import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const TreinarIndexRoute = TreinarIndexRouteImport.update({
   path: '/treinar/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TreinarAreaRoute = TreinarAreaRouteImport.update({
+  id: '/treinar/$area',
+  path: '/treinar/$area',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/treinar/$area': typeof TreinarAreaRoute
   '/treinar': typeof TreinarIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/treinar/'
+  fullPaths: '/' | '/treinar/$area' | '/treinar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/treinar'
-  id: '__root__' | '/' | '/treinar/'
+  to: '/' | '/treinar/$area' | '/treinar'
+  id: '__root__' | '/' | '/treinar/$area' | '/treinar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TreinarAreaRoute: typeof TreinarAreaRoute
   TreinarIndexRoute: typeof TreinarIndexRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TreinarIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/treinar/$area': {
+      id: '/treinar/$area'
+      path: '/treinar/$area'
+      fullPath: '/treinar/$area'
+      preLoaderRoute: typeof TreinarAreaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TreinarAreaRoute: TreinarAreaRoute,
   TreinarIndexRoute: TreinarIndexRoute,
 }
 export const routeTree = rootRouteImport
