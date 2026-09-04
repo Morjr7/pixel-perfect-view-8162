@@ -14,6 +14,7 @@ import { Route as AjudaRouteImport } from './routes/ajuda'
 import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as ConquistasRouteImport } from './routes/conquistas'
+import { Route as EntrarRouteImport } from './routes/entrar'
 import { Route as EstatisticasRouteImport } from './routes/estatisticas'
 import { Route as ListasRouteImport } from './routes/listas'
 import { Route as PerfilRouteImport } from './routes/perfil'
@@ -47,6 +48,11 @@ const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
 const ConquistasRoute = ConquistasRouteImport.update({
   id: '/conquistas',
   path: '/conquistas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EntrarRoute = EntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstatisticasRoute = EstatisticasRouteImport.update({
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/comunidade': typeof ComunidadeRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conquistas': typeof ConquistasRoute
+  '/entrar': typeof EntrarRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/perfil': typeof PerfilRoute
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/comunidade': typeof ComunidadeRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conquistas': typeof ConquistasRoute
+  '/entrar': typeof EntrarRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/perfil': typeof PerfilRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/comunidade': typeof ComunidadeRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/conquistas': typeof ConquistasRoute
+  '/entrar': typeof EntrarRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/perfil': typeof PerfilRoute
@@ -152,6 +161,7 @@ export interface FileRouteTypes {
     | '/comunidade'
     | '/configuracoes'
     | '/conquistas'
+    | '/entrar'
     | '/estatisticas'
     | '/listas'
     | '/perfil'
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/comunidade'
     | '/configuracoes'
     | '/conquistas'
+    | '/entrar'
     | '/estatisticas'
     | '/listas'
     | '/perfil'
@@ -184,6 +195,7 @@ export interface FileRouteTypes {
     | '/comunidade'
     | '/configuracoes'
     | '/conquistas'
+    | '/entrar'
     | '/estatisticas'
     | '/listas'
     | '/perfil'
@@ -201,6 +213,7 @@ export interface RootRouteChildren {
   ComunidadeRoute: typeof ComunidadeRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ConquistasRoute: typeof ConquistasRoute
+  EntrarRoute: typeof EntrarRoute
   EstatisticasRoute: typeof EstatisticasRoute
   ListasRoute: typeof ListasRoute
   PerfilRoute: typeof PerfilRoute
@@ -247,6 +260,13 @@ declare module '@tanstack/react-router' {
       path: '/conquistas'
       fullPath: '/conquistas'
       preLoaderRoute: typeof ConquistasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/entrar': {
+      id: '/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estatisticas': {
@@ -321,6 +341,7 @@ const rootRouteChildren: RootRouteChildren = {
   ComunidadeRoute: ComunidadeRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ConquistasRoute: ConquistasRoute,
+  EntrarRoute: EntrarRoute,
   EstatisticasRoute: EstatisticasRoute,
   ListasRoute: ListasRoute,
   PerfilRoute: PerfilRoute,
