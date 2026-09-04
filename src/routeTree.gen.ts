@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EstatisticasRouteImport } from './routes/estatisticas'
 import { Route as ListasRouteImport } from './routes/listas'
 import { Route as RedacaoRouteImport } from './routes/redacao'
 import { Route as SimuladosRouteImport } from './routes/simulados'
@@ -20,6 +21,11 @@ import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstatisticasRoute = EstatisticasRouteImport.update({
+  id: '/estatisticas',
+  path: '/estatisticas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ListasRoute = ListasRouteImport.update({
@@ -55,6 +61,7 @@ const TreinarAreaRoute = TreinarAreaRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/estatisticas'
     | '/listas'
     | '/redacao'
     | '/simulados'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/estatisticas'
     | '/listas'
     | '/redacao'
     | '/simulados'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/estatisticas'
     | '/listas'
     | '/redacao'
     | '/simulados'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EstatisticasRoute: typeof EstatisticasRoute
   ListasRoute: typeof ListasRoute
   RedacaoRoute: typeof RedacaoRoute
   SimuladosRoute: typeof SimuladosRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estatisticas': {
+      id: '/estatisticas'
+      path: '/estatisticas'
+      fullPath: '/estatisticas'
+      preLoaderRoute: typeof EstatisticasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/listas': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EstatisticasRoute: EstatisticasRoute,
   ListasRoute: ListasRoute,
   RedacaoRoute: RedacaoRoute,
   SimuladosRoute: SimuladosRoute,
