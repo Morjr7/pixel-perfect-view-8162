@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ListasRouteImport } from './routes/listas'
 import { Route as RedacaoRouteImport } from './routes/redacao'
 import { Route as SimuladosRouteImport } from './routes/simulados'
+import { Route as VideosRouteImport } from './routes/videos'
 import { Route as TreinarIndexRouteImport } from './routes/treinar/index'
 import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
 
@@ -36,6 +37,11 @@ const SimuladosRoute = SimuladosRouteImport.update({
   path: '/simulados',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TreinarIndexRoute = TreinarIndexRouteImport.update({
   id: '/treinar/',
   path: '/treinar/',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/listas': typeof ListasRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
+  '/videos': typeof VideosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/listas': typeof ListasRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
+  '/videos': typeof VideosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar': typeof TreinarIndexRoute
 }
@@ -69,22 +77,36 @@ export interface FileRoutesById {
   '/listas': typeof ListasRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
+  '/videos': typeof VideosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/listas' | '/redacao' | '/simulados' | '/treinar/$area' | '/treinar/'
+    | '/'
+    | '/listas'
+    | '/redacao'
+    | '/simulados'
+    | '/videos'
+    | '/treinar/$area'
+    | '/treinar/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/listas' | '/redacao' | '/simulados' | '/treinar/$area' | '/treinar'
+    | '/'
+    | '/listas'
+    | '/redacao'
+    | '/simulados'
+    | '/videos'
+    | '/treinar/$area'
+    | '/treinar'
   id:
     | '__root__'
     | '/'
     | '/listas'
     | '/redacao'
     | '/simulados'
+    | '/videos'
     | '/treinar/$area'
     | '/treinar/'
   fileRoutesById: FileRoutesById
@@ -94,6 +116,7 @@ export interface RootRouteChildren {
   ListasRoute: typeof ListasRoute
   RedacaoRoute: typeof RedacaoRoute
   SimuladosRoute: typeof SimuladosRoute
+  VideosRoute: typeof VideosRoute
   TreinarAreaRoute: typeof TreinarAreaRoute
   TreinarIndexRoute: typeof TreinarIndexRoute
 }
@@ -128,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SimuladosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/treinar/': {
       id: '/treinar/'
       path: '/treinar'
@@ -150,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   ListasRoute: ListasRoute,
   RedacaoRoute: RedacaoRoute,
   SimuladosRoute: SimuladosRoute,
+  VideosRoute: VideosRoute,
   TreinarAreaRoute: TreinarAreaRoute,
   TreinarIndexRoute: TreinarIndexRoute,
 }
