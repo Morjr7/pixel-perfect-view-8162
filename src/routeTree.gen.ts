@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ListasRouteImport } from './routes/listas'
+import { Route as RedacaoRouteImport } from './routes/redacao'
 import { Route as SimuladosRouteImport } from './routes/simulados'
 import { Route as TreinarIndexRouteImport } from './routes/treinar/index'
 import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
@@ -23,6 +24,11 @@ const IndexRoute = IndexRouteImport.update({
 const ListasRoute = ListasRouteImport.update({
   id: '/listas',
   path: '/listas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedacaoRoute = RedacaoRouteImport.update({
+  id: '/redacao',
+  path: '/redacao',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SimuladosRoute = SimuladosRouteImport.update({
@@ -44,6 +50,7 @@ const TreinarAreaRoute = TreinarAreaRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/listas': typeof ListasRoute
+  '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/listas': typeof ListasRoute
+  '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar': typeof TreinarIndexRoute
@@ -59,22 +67,32 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/listas': typeof ListasRoute
+  '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/listas' | '/simulados' | '/treinar/$area' | '/treinar/'
+  fullPaths:
+    '/' | '/listas' | '/redacao' | '/simulados' | '/treinar/$area' | '/treinar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/listas' | '/simulados' | '/treinar/$area' | '/treinar'
+  to:
+    '/' | '/listas' | '/redacao' | '/simulados' | '/treinar/$area' | '/treinar'
   id:
-    '__root__' | '/' | '/listas' | '/simulados' | '/treinar/$area' | '/treinar/'
+    | '__root__'
+    | '/'
+    | '/listas'
+    | '/redacao'
+    | '/simulados'
+    | '/treinar/$area'
+    | '/treinar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ListasRoute: typeof ListasRoute
+  RedacaoRoute: typeof RedacaoRoute
   SimuladosRoute: typeof SimuladosRoute
   TreinarAreaRoute: typeof TreinarAreaRoute
   TreinarIndexRoute: typeof TreinarIndexRoute
@@ -94,6 +112,13 @@ declare module '@tanstack/react-router' {
       path: '/listas'
       fullPath: '/listas'
       preLoaderRoute: typeof ListasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/redacao': {
+      id: '/redacao'
+      path: '/redacao'
+      fullPath: '/redacao'
+      preLoaderRoute: typeof RedacaoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/simulados': {
@@ -123,6 +148,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ListasRoute: ListasRoute,
+  RedacaoRoute: RedacaoRoute,
   SimuladosRoute: SimuladosRoute,
   TreinarAreaRoute: TreinarAreaRoute,
   TreinarIndexRoute: TreinarIndexRoute,
