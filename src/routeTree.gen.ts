@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SimuladosRouteImport } from './routes/simulados'
 import { Route as TreinarIndexRouteImport } from './routes/treinar/index'
 import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SimuladosRoute = SimuladosRouteImport.update({
+  id: '/simulados',
+  path: '/simulados',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TreinarIndexRoute = TreinarIndexRouteImport.update({
@@ -31,30 +37,34 @@ const TreinarAreaRoute = TreinarAreaRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/simulados': typeof SimuladosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/simulados': typeof SimuladosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar': typeof TreinarIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/simulados': typeof SimuladosRoute
   '/treinar/$area': typeof TreinarAreaRoute
   '/treinar/': typeof TreinarIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/treinar/$area' | '/treinar/'
+  fullPaths: '/' | '/simulados' | '/treinar/$area' | '/treinar/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/treinar/$area' | '/treinar'
-  id: '__root__' | '/' | '/treinar/$area' | '/treinar/'
+  to: '/' | '/simulados' | '/treinar/$area' | '/treinar'
+  id: '__root__' | '/' | '/simulados' | '/treinar/$area' | '/treinar/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SimuladosRoute: typeof SimuladosRoute
   TreinarAreaRoute: typeof TreinarAreaRoute
   TreinarIndexRoute: typeof TreinarIndexRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/simulados': {
+      id: '/simulados'
+      path: '/simulados'
+      fullPath: '/simulados'
+      preLoaderRoute: typeof SimuladosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/treinar/': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SimuladosRoute: SimuladosRoute,
   TreinarAreaRoute: TreinarAreaRoute,
   TreinarIndexRoute: TreinarIndexRoute,
 }
