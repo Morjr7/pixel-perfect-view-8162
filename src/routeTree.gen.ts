@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConquistasRouteImport } from './routes/conquistas'
 import { Route as EstatisticasRouteImport } from './routes/estatisticas'
 import { Route as ListasRouteImport } from './routes/listas'
 import { Route as RankingRouteImport } from './routes/ranking'
@@ -22,6 +23,11 @@ import { Route as TreinarAreaRouteImport } from './routes/treinar/$area'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConquistasRoute = ConquistasRouteImport.update({
+  id: '/conquistas',
+  path: '/conquistas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EstatisticasRoute = EstatisticasRouteImport.update({
@@ -67,6 +73,7 @@ const TreinarAreaRoute = TreinarAreaRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/ranking': typeof RankingRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/ranking': typeof RankingRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
   '/ranking': typeof RankingRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/conquistas'
     | '/estatisticas'
     | '/listas'
     | '/ranking'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/conquistas'
     | '/estatisticas'
     | '/listas'
     | '/ranking'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/conquistas'
     | '/estatisticas'
     | '/listas'
     | '/ranking'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConquistasRoute: typeof ConquistasRoute
   EstatisticasRoute: typeof EstatisticasRoute
   ListasRoute: typeof ListasRoute
   RankingRoute: typeof RankingRoute
@@ -154,6 +167,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conquistas': {
+      id: '/conquistas'
+      path: '/conquistas'
+      fullPath: '/conquistas'
+      preLoaderRoute: typeof ConquistasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/estatisticas': {
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConquistasRoute: ConquistasRoute,
   EstatisticasRoute: EstatisticasRoute,
   ListasRoute: ListasRoute,
   RankingRoute: RankingRoute,
