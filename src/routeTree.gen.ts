@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EstatisticasRouteImport } from './routes/estatisticas'
 import { Route as ListasRouteImport } from './routes/listas'
+import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as RedacaoRouteImport } from './routes/redacao'
 import { Route as SimuladosRouteImport } from './routes/simulados'
 import { Route as VideosRouteImport } from './routes/videos'
@@ -31,6 +32,11 @@ const EstatisticasRoute = EstatisticasRouteImport.update({
 const ListasRoute = ListasRouteImport.update({
   id: '/listas',
   path: '/listas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RedacaoRoute = RedacaoRouteImport.update({
@@ -63,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
+  '/ranking': typeof RankingRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
   '/videos': typeof VideosRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
+  '/ranking': typeof RankingRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
   '/videos': typeof VideosRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
+  '/ranking': typeof RankingRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
   '/videos': typeof VideosRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/estatisticas'
     | '/listas'
+    | '/ranking'
     | '/redacao'
     | '/simulados'
     | '/videos'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/estatisticas'
     | '/listas'
+    | '/ranking'
     | '/redacao'
     | '/simulados'
     | '/videos'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '/'
     | '/estatisticas'
     | '/listas'
+    | '/ranking'
     | '/redacao'
     | '/simulados'
     | '/videos'
@@ -127,6 +139,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EstatisticasRoute: typeof EstatisticasRoute
   ListasRoute: typeof ListasRoute
+  RankingRoute: typeof RankingRoute
   RedacaoRoute: typeof RedacaoRoute
   SimuladosRoute: typeof SimuladosRoute
   VideosRoute: typeof VideosRoute
@@ -155,6 +168,13 @@ declare module '@tanstack/react-router' {
       path: '/listas'
       fullPath: '/listas'
       preLoaderRoute: typeof ListasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/redacao': {
@@ -199,6 +219,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EstatisticasRoute: EstatisticasRoute,
   ListasRoute: ListasRoute,
+  RankingRoute: RankingRoute,
   RedacaoRoute: RedacaoRoute,
   SimuladosRoute: SimuladosRoute,
   VideosRoute: VideosRoute,
