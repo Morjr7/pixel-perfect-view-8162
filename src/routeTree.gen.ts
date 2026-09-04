@@ -14,6 +14,7 @@ import { Route as ComunidadeRouteImport } from './routes/comunidade'
 import { Route as ConquistasRouteImport } from './routes/conquistas'
 import { Route as EstatisticasRouteImport } from './routes/estatisticas'
 import { Route as ListasRouteImport } from './routes/listas'
+import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as RankingRouteImport } from './routes/ranking'
 import { Route as RedacaoRouteImport } from './routes/redacao'
 import { Route as SimuladosRouteImport } from './routes/simulados'
@@ -44,6 +45,11 @@ const EstatisticasRoute = EstatisticasRouteImport.update({
 const ListasRoute = ListasRouteImport.update({
   id: '/listas',
   path: '/listas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RankingRoute = RankingRouteImport.update({
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
+  '/perfil': typeof PerfilRoute
   '/ranking': typeof RankingRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
+  '/perfil': typeof PerfilRoute
   '/ranking': typeof RankingRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/conquistas': typeof ConquistasRoute
   '/estatisticas': typeof EstatisticasRoute
   '/listas': typeof ListasRoute
+  '/perfil': typeof PerfilRoute
   '/ranking': typeof RankingRoute
   '/redacao': typeof RedacaoRoute
   '/simulados': typeof SimuladosRoute
@@ -125,6 +134,7 @@ export interface FileRouteTypes {
     | '/conquistas'
     | '/estatisticas'
     | '/listas'
+    | '/perfil'
     | '/ranking'
     | '/redacao'
     | '/simulados'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/conquistas'
     | '/estatisticas'
     | '/listas'
+    | '/perfil'
     | '/ranking'
     | '/redacao'
     | '/simulados'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/conquistas'
     | '/estatisticas'
     | '/listas'
+    | '/perfil'
     | '/ranking'
     | '/redacao'
     | '/simulados'
@@ -165,6 +177,7 @@ export interface RootRouteChildren {
   ConquistasRoute: typeof ConquistasRoute
   EstatisticasRoute: typeof EstatisticasRoute
   ListasRoute: typeof ListasRoute
+  PerfilRoute: typeof PerfilRoute
   RankingRoute: typeof RankingRoute
   RedacaoRoute: typeof RedacaoRoute
   SimuladosRoute: typeof SimuladosRoute
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       path: '/listas'
       fullPath: '/listas'
       preLoaderRoute: typeof ListasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ranking': {
@@ -261,6 +281,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConquistasRoute: ConquistasRoute,
   EstatisticasRoute: EstatisticasRoute,
   ListasRoute: ListasRoute,
+  PerfilRoute: PerfilRoute,
   RankingRoute: RankingRoute,
   RedacaoRoute: RedacaoRoute,
   SimuladosRoute: SimuladosRoute,
