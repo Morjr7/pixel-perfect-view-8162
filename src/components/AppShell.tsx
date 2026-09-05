@@ -19,8 +19,9 @@ import {
   Search,
   Menu,
 } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useProgresso } from "@/lib/progresso";
+import { useNavigate } from "@tanstack/react-router";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 const NAV = [
@@ -88,6 +89,12 @@ export function AppShell({ children }: { children: ReactNode }) {
   const { estado } = useProgresso();
   const [aberto, setAberto] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (estado.pronto === false) return;
+    if (!estado.logado && path !== "/entrar") navigate({ to: "/entrar", replace: true });
+  }, [estado.logado, estado.pronto, navigate, path]);
 
   return (
     <div className="min-h-screen">
