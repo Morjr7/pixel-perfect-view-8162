@@ -7,7 +7,7 @@ export type LocalUser = {
   createdAt: string;
 };
 
-const USERS_KEY = "acelera-enem-users-v1";
+const USERS_KEY = "giyv-estudos-users-v1";
 
 const normalize = (value: string) => value.trim().toLocaleLowerCase("pt-BR");
 

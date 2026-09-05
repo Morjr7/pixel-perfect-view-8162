@@ -12,7 +12,7 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/redacao")({
   head: () => ({
     meta: [
-      { title: "Redação ENEM — Acelera ENEM" },
+      { title: "Redação ENEM — Jovens Educadores GIYV Estudos" },
       {
         name: "description",
         content: "Escolha um tema, escreva numa folha pautada e acompanhe a sua evolução.",
@@ -46,24 +46,26 @@ function Redacao() {
   const [texto, setTexto] = useState("");
   const [aba, setAba] = useState<"temas" | "escrever" | "textos">("temas");
   const [salvoEm, setSalvoEm] = useState<string | null>(null);
+  const [corrigindo, setCorrigindo] = useState(false);
   const detalhes = useMemo(() => themeContext(tema), [tema]);
+  const chaveRascunho = `giyv-redacao-${estado.email || "visitante"}-${tema}`;
 
   useEffect(() => {
-    const draft = localStorage.getItem(`acelera-redacao-${tema}`);
+    const draft = localStorage.getItem(chaveRascunho);
     setTexto(draft ?? "");
     setSalvoEm(draft ? "Rascunho recuperado" : null);
-  }, [tema]);
+  }, [chaveRascunho]);
 
   useEffect(() => {
     if (!texto) return;
     const timer = window.setTimeout(() => {
-      localStorage.setItem(`acelera-redacao-${tema}`, texto);
+      localStorage.setItem(chaveRascunho, texto);
       setSalvoEm(
         `Salvo às ${new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })}`,
       );
     }, 600);
     return () => window.clearTimeout(timer);
-  }, [tema, texto]);
+  }, [chaveRascunho, texto]);
 
   const palavras = texto.trim().split(/\s+/).filter(Boolean).length;
   const linhas = texto ? texto.split(/\n/).length : 0;
@@ -76,21 +78,32 @@ function Redacao() {
 
   const limpar = () => {
     setTexto("");
-    localStorage.removeItem(`acelera-redacao-${tema}`);
+    localStorage.removeItem(chaveRascunho);
     setSalvoEm(null);
     toast.success("Rascunho limpo.");
   };
 
-  const enviar = () => {
+  const enviar = async () => {
+    if (corrigindo) return;
     if (palavras < 40) {
       toast.error("Escreva pelo menos 40 palavras para enviar à correção.");
       return;
     }
+    setCorrigindo(true);
+    for (const mensagem of [
+      "A analisar a estrutura…",
+      "A verificar os argumentos…",
+      "A preparar a sua devolutiva…",
+    ]) {
+      toast(mensagem);
+      await new Promise((resolve) => window.setTimeout(resolve, 1600));
+    }
     const r = salvarRedacao(tema, texto);
-    localStorage.removeItem(`acelera-redacao-${tema}`);
+    localStorage.removeItem(chaveRascunho);
     setTexto("");
     setSalvoEm(null);
-    toast.success(`Redação enviada: ${r.total} pontos na correção demonstrativa.`);
+    setCorrigindo(false);
+    toast.success(`Correção concluída: ${r.total}/1000. Consulte a devolutiva por competência.`);
   };
 
   return (
@@ -101,7 +114,7 @@ function Redacao() {
         acao={
           <span className="inline-flex items-center gap-2 rounded-full bg-primary/15 px-3 py-2 text-sm font-semibold text-secondary">
             <span className="grid size-7 place-items-center rounded-full bg-primary/30">✍️</span>
-            Valentina Castro
+            {estado.nome || "Seu espaço de estudo"}
           </span>
         }
       />
@@ -230,14 +243,14 @@ function Redacao() {
                 </span>
               </div>
               <div className="mt-4 flex flex-wrap gap-2">
-                <PopButton tone="success" onClick={enviar}>
+                <PopButton tone="success" onClick={enviar} disabled={corrigindo}>
                   <Send className="mr-2 size-4" />
-                  Enviar redação
+                  {corrigindo ? "Corrigindo…" : "Enviar redação"}
                 </PopButton>
                 <PopButton
                   tone="neutral"
                   onClick={() => {
-                    localStorage.setItem(`acelera-redacao-${tema}`, texto);
+                    localStorage.setItem(chaveRascunho, texto);
                     setSalvoEm("Rascunho salvo agora");
                     toast.success("Rascunho salvo.");
                   }}

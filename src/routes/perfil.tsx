@@ -9,9 +9,12 @@ import { useEstatisticas, useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/perfil")({
   head: () => ({
     meta: [
-      { title: "Meu perfil de estudos — Acelera ENEM" },
-      { name: "description", content: "Resumo do seu desempenho, medalhas, ofensiva e dados da conta." },
-      { property: "og:title", content: "Meu perfil de estudos — Acelera ENEM" },
+      { title: "Meu perfil de estudos — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Resumo do seu desempenho, medalhas, ofensiva e dados da conta.",
+      },
+      { property: "og:title", content: "Meu perfil de estudos — Jovens Educadores GIYV Estudos" },
       { property: "og:description", content: "Seu histórico de estudos em um só lugar." },
     ],
   }),
@@ -112,7 +115,10 @@ function Perfil() {
           <div className="panel p-5">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold">Medalhas</h2>
-              <Link to="/conquistas" className="text-sm font-semibold text-secondary hover:underline">
+              <Link
+                to="/conquistas"
+                className="text-sm font-semibold text-secondary hover:underline"
+              >
                 Ver todas
               </Link>
             </div>

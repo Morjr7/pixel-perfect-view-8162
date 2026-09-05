@@ -8,13 +8,16 @@ import { AREAS, QUESTOES, type AreaId, type Dificuldade } from "@/lib/enem-data"
 export const Route = createFileRoute("/treinar/$area")({
   head: () => ({
     meta: [
-      { title: "Treino por área — Acelera ENEM" },
+      { title: "Treino por área — Jovens Educadores GIYV Estudos" },
       {
         name: "description",
         content: "Sessão de treino com filtros de disciplina e dificuldade, correção e explicação.",
       },
-      { property: "og:title", content: "Treino por área — Acelera ENEM" },
-      { property: "og:description", content: "Responda, receba correção comentada e peça ajuda ao tutor." },
+      { property: "og:title", content: "Treino por área — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Responda, receba correção comentada e peça ajuda ao tutor.",
+      },
     ],
   }),
   component: TreinoArea,

@@ -15,7 +15,7 @@ const q = (
   area,
   disciplina,
   assunto,
-  fonte: "Banco de treino Acelera ENEM — questão autoral",
+  fonte: "Banco de treino Jovens Educadores GIYV Estudos — questão autoral",
   dificuldade,
   enunciado,
   alternativas,

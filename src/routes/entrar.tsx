@@ -10,8 +10,11 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/entrar")({
   head: () => ({
     meta: [
-      { title: "Acesso à plataforma — Acelera ENEM" },
-      { name: "description", content: "Entre ou crie a sua conta no Acelera ENEM." },
+      { title: "Acesso à plataforma — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Entre ou crie a sua conta no Jovens Educadores GIYV Estudos.",
+      },
     ],
   }),
   component: Entrar,

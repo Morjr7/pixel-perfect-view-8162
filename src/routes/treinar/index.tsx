@@ -7,12 +7,15 @@ import { useEstatisticas } from "@/lib/progresso";
 export const Route = createFileRoute("/treinar/")({
   head: () => ({
     meta: [
-      { title: "Treinar questões do ENEM — Acelera ENEM" },
+      { title: "Treinar questões do ENEM — Jovens Educadores GIYV Estudos" },
       {
         name: "description",
         content: "Escolha uma área e treine questões comentadas do ENEM com correção na hora.",
       },
-      { property: "og:title", content: "Treinar questões do ENEM — Acelera ENEM" },
+      {
+        property: "og:title",
+        content: "Treinar questões do ENEM — Jovens Educadores GIYV Estudos",
+      },
       { property: "og:description", content: "Questões comentadas por área com pistas e tutores." },
     ],
   }),

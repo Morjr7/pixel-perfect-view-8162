@@ -480,7 +480,7 @@ export const TUTORES: Tutor[] = [
   },
   {
     id: "helena",
-    nome: "Valentina Castro",
+    nome: "Seu espaço de estudo",
     area: "redacao",
     papel: "Corretora de Redação",
     emoji: "✍️",
@@ -580,18 +580,7 @@ export type RankingItem = {
   eu?: boolean;
 };
 
-export const RANKING: RankingItem[] = [
-  { pos: 1, nome: "Marina Cavalcanti", xp: 14820, ofensiva: 63, avatar: "🦉" },
-  { pos: 2, nome: "Pedro Uchôa", xp: 13990, ofensiva: 41, avatar: "🚀" },
-  { pos: 3, nome: "Lívia Sanches", xp: 12640, ofensiva: 37, avatar: "🌟" },
-  { pos: 4, nome: "Caio Ferrari", xp: 11570, ofensiva: 28, avatar: "⚡" },
-  { pos: 5, nome: "Ana Beatriz Rocha", xp: 10480, ofensiva: 22, avatar: "🎯" },
-  { pos: 6, nome: "Você", xp: 0, ofensiva: 0, avatar: "🧑‍🚀", eu: true },
-  { pos: 7, nome: "Gustavo Meireles", xp: 8120, ofensiva: 12, avatar: "🐝" },
-  { pos: 8, nome: "Sofia Andrade", xp: 7640, ofensiva: 9, avatar: "🍀" },
-  { pos: 9, nome: "Heitor Lopes", xp: 6980, ofensiva: 7, avatar: "🎧" },
-  { pos: 10, nome: "Isabela Prado", xp: 6210, ofensiva: 5, avatar: "🌤️" },
-];
+export const RANKING: RankingItem[] = [];
 
 export type Conquista = {
   id: string;
@@ -680,50 +669,7 @@ export type PostComunidade = {
   tag: string;
 };
 
-export const POSTS: PostComunidade[] = [
-  {
-    id: "p1",
-    autor: "Marina Cavalcanti",
-    avatar: "🦉",
-    tempo: "há 2 h",
-    texto:
-      "Dica que mudou meu treino: depois de errar uma questão, escrevo com minhas palavras por que errei. Em duas semanas meu aproveitamento em Humanas subiu 14%.",
-    curtidas: 128,
-    comentarios: 19,
-    tag: "Estudo",
-  },
-  {
-    id: "p2",
-    autor: "Pedro Uchôa",
-    avatar: "🚀",
-    tempo: "há 5 h",
-    texto: "Alguém tem um resumo bom de eletroquímica? Estou travando nas pilhas 😅",
-    curtidas: 44,
-    comentarios: 12,
-    tag: "Dúvida",
-  },
-  {
-    id: "p3",
-    autor: "Helena Prado",
-    avatar: "✍️",
-    tempo: "ontem",
-    texto:
-      "Lembrete de redação: proposta de intervenção precisa de agente, ação, meio, finalidade e detalhamento. Faltou um? Perdeu ponto na competência 5.",
-    curtidas: 302,
-    comentarios: 37,
-    tag: "Redação",
-  },
-  {
-    id: "p4",
-    autor: "Lívia Sanches",
-    avatar: "🌟",
-    tempo: "ontem",
-    texto: "Fechei o simulado de Matemática com 32 acertos! A meta era 28. Bora, gente 💪",
-    curtidas: 210,
-    comentarios: 25,
-    tag: "Conquista",
-  },
-];
+export const POSTS: PostComunidade[] = [];
 
 export const notaTriEstimada = (acertos: number, total: number) => {
   if (total === 0) return 0;

@@ -52,7 +52,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       </span>
       {!compact && (
         <span className="font-display text-lg font-bold leading-none">
-          Acelera<span className="text-secondary">ENEM</span>
+          Jovens Educadores <span className="text-secondary">GIYV Estudos</span>
         </span>
       )}
     </Link>

@@ -10,13 +10,16 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/simulados")({
   head: () => ({
     meta: [
-      { title: "Simulados do ENEM — Acelera ENEM" },
+      { title: "Simulados do ENEM — Jovens Educadores GIYV Estudos" },
       {
         name: "description",
         content: "Monte simulados por área ou geral, escolha a quantidade e veja a nota estimada.",
       },
-      { property: "og:title", content: "Simulados do ENEM — Acelera ENEM" },
-      { property: "og:description", content: "Simulados cronometrados com correção e nota estimada." },
+      { property: "og:title", content: "Simulados do ENEM — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Simulados cronometrados com correção e nota estimada.",
+      },
     ],
   }),
   component: Simulados,
@@ -39,7 +42,8 @@ function Simulados() {
     [disponiveis, quantidade],
   );
 
-  const nomeEscopo = escopo === "geral" ? "Simulado Geral" : AREAS.find((a) => a.id === escopo)!.nome;
+  const nomeEscopo =
+    escopo === "geral" ? "Simulado Geral" : AREAS.find((a) => a.id === escopo)!.nome;
 
   if (rodando) {
     return (

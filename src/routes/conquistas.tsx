@@ -7,10 +7,17 @@ import { useEstatisticas, useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/conquistas")({
   head: () => ({
     meta: [
-      { title: "Conquistas e medalhas — Acelera ENEM" },
-      { name: "description", content: "Desbloqueie medalhas ao responder questões, manter a ofensiva e escrever redações." },
-      { property: "og:title", content: "Conquistas e medalhas — Acelera ENEM" },
-      { property: "og:description", content: "Metas de estudo que transformam a rotina em uma jornada." },
+      { title: "Conquistas e medalhas — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content:
+          "Desbloqueie medalhas ao responder questões, manter a ofensiva e escrever redações.",
+      },
+      { property: "og:title", content: "Conquistas e medalhas — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Metas de estudo que transformam a rotina em uma jornada.",
+      },
     ],
   }),
   component: Conquistas,
@@ -48,7 +55,9 @@ function Conquistas() {
               className={`panel p-5 ${ok ? "ring-2 ring-warning" : "opacity-80"}`}
             >
               <div className="flex items-center gap-3">
-                <span className={`grid size-12 place-items-center rounded-2xl text-2xl ${ok ? "bg-warning/25" : "bg-muted/50 grayscale"}`}>
+                <span
+                  className={`grid size-12 place-items-center rounded-2xl text-2xl ${ok ? "bg-warning/25" : "bg-muted/50 grayscale"}`}
+                >
                   {c.emoji}
                 </span>
                 <div>

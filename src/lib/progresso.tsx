@@ -60,12 +60,13 @@ export type Estado = {
   conquistasVistas: string[];
 };
 
-const CHAVE = "acelera-enem-v1";
+const SESSAO_ATUAL = "giyv-sessao-atual";
+const PREFIXO_CONTA = "giyv-conta-v1:";
 
 const inicial: Estado = {
-  nome: "Estudante Demo",
-  email: "demo@aceleraenem.app",
-  avatar: "🧑‍🚀",
+  nome: "",
+  email: "",
+  avatar: "🧑‍🎓",
   logado: false,
   xp: 0,
   ofensiva: 0,
@@ -100,11 +101,16 @@ const ProgressoContext = createContext<Ctx | null>(null);
 export function ProgressoProvider({ children }: { children: ReactNode }) {
   const [estado, setEstado] = useState<Estado>(inicial);
   const [pronto, setPronto] = useState(false);
+  const [contaAtual, setContaAtual] = useState<string | null>(null);
 
   useEffect(() => {
     try {
-      const bruto = localStorage.getItem(CHAVE);
-      if (bruto) setEstado({ ...inicial, ...JSON.parse(bruto) });
+      const id = localStorage.getItem(SESSAO_ATUAL);
+      if (id) {
+        const bruto = localStorage.getItem(`${PREFIXO_CONTA}${id}`);
+        if (bruto) setEstado({ ...inicial, ...JSON.parse(bruto), logado: true });
+        setContaAtual(id);
+      }
     } catch {
       /* ignora leitura inválida */
     }
@@ -112,9 +118,9 @@ export function ProgressoProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!pronto) return;
-    localStorage.setItem(CHAVE, JSON.stringify(estado));
-  }, [estado, pronto]);
+    if (!pronto || !contaAtual || !estado.logado) return;
+    localStorage.setItem(`${PREFIXO_CONTA}${contaAtual}`, JSON.stringify(estado));
+  }, [estado, pronto, contaAtual]);
 
   const marcarDia = (e: Estado): Estado => {
     const d = hoje();
@@ -136,10 +142,28 @@ export function ProgressoProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const entrar = useCallback((nome: string, email: string) => {
-    setEstado((e) => ({ ...e, logado: true, nome: nome || e.nome, email: email || e.email }));
+    const id = email.trim().toLocaleLowerCase("pt-BR");
+    try {
+      const salvo = localStorage.getItem(`${PREFIXO_CONTA}${id}`);
+      const conta = salvo ? { ...inicial, ...JSON.parse(salvo) } : { ...inicial };
+      const atual = { ...conta, logado: true, nome: nome.trim(), email: id };
+      localStorage.setItem(SESSAO_ATUAL, id);
+      localStorage.setItem(`${PREFIXO_CONTA}${id}`, JSON.stringify(atual));
+      setContaAtual(id);
+      setEstado(atual);
+    } catch {
+      setEstado((e) => ({ ...e, logado: true, nome: nome.trim(), email: id }));
+    }
   }, []);
 
-  const sair = useCallback(() => setEstado((e) => ({ ...e, logado: false })), []);
+  const sair = useCallback(() => {
+    setEstado((e) => {
+      if (contaAtual) localStorage.setItem(`${PREFIXO_CONTA}${contaAtual}`, JSON.stringify(e));
+      return { ...inicial, logado: false };
+    });
+    localStorage.removeItem(SESSAO_ATUAL);
+    setContaAtual(null);
+  }, [contaAtual]);
 
   const salvarRedacao = useCallback((tema: string, texto: string) => {
     const palavras = texto.trim().split(/\s+/).filter(Boolean).length;
@@ -160,15 +184,18 @@ export function ProgressoProvider({ children }: { children: ReactNode }) {
     return nova;
   }, []);
 
-  const criarLista = useCallback((l: Omit<ListaPersonalizada, "id" | "criadaEm" | "concluidas">) => {
-    setEstado((e) => ({
-      ...e,
-      listas: [
-        { ...l, id: `l-${Date.now()}`, criadaEm: new Date().toISOString(), concluidas: 0 },
-        ...e.listas,
-      ],
-    }));
-  }, []);
+  const criarLista = useCallback(
+    (l: Omit<ListaPersonalizada, "id" | "criadaEm" | "concluidas">) => {
+      setEstado((e) => ({
+        ...e,
+        listas: [
+          { ...l, id: `l-${Date.now()}`, criadaEm: new Date().toISOString(), concluidas: 0 },
+          ...e.listas,
+        ],
+      }));
+    },
+    [],
+  );
 
   const removerLista = useCallback((id: string) => {
     setEstado((e) => ({ ...e, listas: e.listas.filter((l) => l.id !== id) }));
@@ -186,7 +213,17 @@ export function ProgressoProvider({ children }: { children: ReactNode }) {
     setEstado((e) => ({ ...e, ...dados }));
   }, []);
 
-  const zerar = useCallback(() => setEstado({ ...inicial, logado: true }), []);
+  const zerar = useCallback(
+    () =>
+      setEstado((e) => ({
+        ...inicial,
+        nome: e.nome,
+        email: e.email,
+        avatar: e.avatar,
+        logado: true,
+      })),
+    [],
+  );
 
   const valor = useMemo(
     () => ({

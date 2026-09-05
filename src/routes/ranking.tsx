@@ -9,10 +9,16 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/ranking")({
   head: () => ({
     meta: [
-      { title: "Ranking de estudantes — Acelera ENEM" },
-      { name: "description", content: "Veja sua posição no ranking semanal por XP e ofensiva de estudos." },
-      { property: "og:title", content: "Ranking de estudantes — Acelera ENEM" },
-      { property: "og:description", content: "Compare seu XP com o de outros estudantes e suba de posição." },
+      { title: "Ranking de estudantes — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Veja sua posição no ranking semanal por XP e ofensiva de estudos.",
+      },
+      { property: "og:title", content: "Ranking de estudantes — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Compare seu XP com o de outros estudantes e suba de posição.",
+      },
     ],
   }),
   component: Ranking,
@@ -23,22 +29,42 @@ function Ranking() {
   const [periodo, setPeriodo] = useState<"semana" | "mes" | "geral">("semana");
 
   const lista = RANKING.map((r) =>
-    r.eu ? { ...r, nome: estado.nome, xp: estado.xp, ofensiva: estado.ofensiva, avatar: estado.avatar } : r,
+    r.eu
+      ? { ...r, nome: estado.nome, xp: estado.xp, ofensiva: estado.ofensiva, avatar: estado.avatar }
+      : r,
   )
     .sort((a, b) => b.xp - a.xp)
     .map((r, i) => ({ ...r, pos: i + 1 }));
 
   return (
     <AppShell>
-      <PageHeader titulo="Ranking" subtitulo="Estudantes fictícios para demonstrar a competição saudável." />
+      <PageHeader
+        titulo="Ranking"
+        subtitulo="A competição aparecerá quando houver dados reais partilhados."
+      />
 
       <div className="mb-5 flex flex-wrap gap-2">
         {(["semana", "mes", "geral"] as const).map((p) => (
-          <PopButton key={p} size="sm" tone={periodo === p ? "primary" : "neutral"} onClick={() => setPeriodo(p)}>
+          <PopButton
+            key={p}
+            size="sm"
+            tone={periodo === p ? "primary" : "neutral"}
+            onClick={() => setPeriodo(p)}
+          >
             {p === "semana" ? "Semana" : p === "mes" ? "Mês" : "Geral"}
           </PopButton>
         ))}
       </div>
+
+      {lista.length === 0 && (
+        <div className="panel mb-6 p-10 text-center">
+          <h2 className="text-lg font-bold">Ranking em formação</h2>
+          <p className="mt-2 text-sm text-muted-foreground">
+            O ranking entre pessoas exige um backend partilhado. Nenhum estudante fictício é exibido
+            aqui.
+          </p>
+        </div>
+      )}
 
       <div className="mb-6 grid gap-4 sm:grid-cols-3">
         {lista.slice(0, 3).map((r, i) => (

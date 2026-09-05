@@ -19,13 +19,17 @@ import { useEstatisticas, useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/estatisticas")({
   head: () => ({
     meta: [
-      { title: "Estatísticas de estudo — Acelera ENEM" },
+      { title: "Estatísticas de estudo — Jovens Educadores GIYV Estudos" },
       {
         name: "description",
-        content: "Acompanhe acertos, erros, aproveitamento por área e evolução semanal dos estudos.",
+        content:
+          "Acompanhe acertos, erros, aproveitamento por área e evolução semanal dos estudos.",
       },
-      { property: "og:title", content: "Estatísticas de estudo — Acelera ENEM" },
-      { property: "og:description", content: "Gráficos de desempenho por área e evolução ao longo dos dias." },
+      { property: "og:title", content: "Estatísticas de estudo — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Gráficos de desempenho por área e evolução ao longo dos dias.",
+      },
     ],
   }),
   component: Estatisticas,
@@ -50,14 +54,20 @@ function Estatisticas() {
 
   return (
     <AppShell>
-      <PageHeader titulo="Estatísticas" subtitulo="Entenda onde você está evoluindo e onde precisa insistir." />
+      <PageHeader
+        titulo="Estatísticas"
+        subtitulo="Entenda onde você está evoluindo e onde precisa insistir."
+      />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[
           { l: "Questões resolvidas", v: stats.total },
           { l: "Acertos", v: stats.acertos },
           { l: "Erros", v: stats.erros },
-          { l: "Tempo de estudo", v: `${Math.floor(stats.tempoEstudo / 60)}h${stats.tempoEstudo % 60}` },
+          {
+            l: "Tempo de estudo",
+            v: `${Math.floor(stats.tempoEstudo / 60)}h${stats.tempoEstudo % 60}`,
+          },
         ].map((c) => (
           <div key={c.l} className="panel p-5">
             <div className="text-3xl font-bold">{c.v}</div>

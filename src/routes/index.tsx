@@ -9,13 +9,13 @@ import { useEstatisticas, useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Acelera ENEM — seu painel de estudos" },
+      { title: "Jovens Educadores GIYV Estudos — seu painel de estudos" },
       {
         name: "description",
         content:
-          "Veja o que estudar hoje, sua ofensiva, XP, ranking e desempenho por área no Acelera ENEM.",
+          "Veja o que estudar hoje, sua ofensiva, XP, ranking e desempenho por área no Jovens Educadores GIYV Estudos.",
       },
-      { property: "og:title", content: "Acelera ENEM — seu painel de estudos" },
+      { property: "og:title", content: "Jovens Educadores GIYV Estudos — seu painel de estudos" },
       {
         property: "og:description",
         content: "Painel com metas do dia, ofensiva, XP e evolução por área de conhecimento.",
@@ -40,7 +40,9 @@ function Inicio() {
     <AppShell>
       <section className="panel-strong relative overflow-hidden p-6 sm:p-8">
         <div className="relative z-10 max-w-2xl">
-          <p className="text-sm font-semibold text-secondary">Bom estudo, {estado.nome.split(" ")[0]}!</p>
+          <p className="text-sm font-semibold text-secondary">
+            Bom estudo, {estado.nome.split(" ")[0]}!
+          </p>
           <h1 className="mt-2 text-3xl font-bold sm:text-4xl">O que você vai estudar hoje?</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Sua meta diária é de {estado.metaDiaria} questões. Você já fez {respondidasHoje} hoje.
@@ -67,10 +69,25 @@ function Inicio() {
 
       <section className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {[
-          { icone: Flame, rotulo: "Ofensiva atual", valor: `${estado.ofensiva} dias`, extra: `Melhor: ${estado.melhorOfensiva}` },
+          {
+            icone: Flame,
+            rotulo: "Ofensiva atual",
+            valor: `${estado.ofensiva} dias`,
+            extra: `Melhor: ${estado.melhorOfensiva}`,
+          },
           { icone: Star, rotulo: "XP acumulado", valor: estado.xp, extra: "15 XP por acerto" },
-          { icone: Target, rotulo: "Aproveitamento", valor: `${stats.aproveitamento}%`, extra: `${stats.total} questões` },
-          { icone: Trophy, rotulo: "Posição no ranking", valor: `#${posicao}`, extra: "Ranking semanal" },
+          {
+            icone: Target,
+            rotulo: "Aproveitamento",
+            valor: `${stats.aproveitamento}%`,
+            extra: `${stats.total} questões`,
+          },
+          {
+            icone: Trophy,
+            rotulo: "Posição no ranking",
+            valor: `#${posicao}`,
+            extra: "Ranking semanal",
+          },
         ].map((c) => (
           <div key={c.rotulo} className="panel p-5">
             <c.icone className="size-5 text-secondary" aria-hidden />
@@ -113,7 +130,12 @@ function Inicio() {
                       Treinar
                     </Link>
                   </PopButton>
-                  <PopButton asChild tone="neutral" size="sm" aria-label={`Estatísticas de ${area.nome}`}>
+                  <PopButton
+                    asChild
+                    tone="neutral"
+                    size="sm"
+                    aria-label={`Estatísticas de ${area.nome}`}
+                  >
                     <Link to="/estatisticas">
                       <BarChart3 className="size-4" aria-hidden />
                     </Link>

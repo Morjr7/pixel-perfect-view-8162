@@ -10,13 +10,17 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/listas")({
   head: () => ({
     meta: [
-      { title: "Listas personalizadas — Acelera ENEM" },
+      { title: "Listas personalizadas — Jovens Educadores GIYV Estudos" },
       {
         name: "description",
-        content: "Monte listas de questões por área e quantidade e acompanhe o progresso de cada uma.",
+        content:
+          "Monte listas de questões por área e quantidade e acompanhe o progresso de cada uma.",
       },
-      { property: "og:title", content: "Listas personalizadas — Acelera ENEM" },
-      { property: "og:description", content: "Crie listas de estudo sob medida e treine no seu ritmo." },
+      { property: "og:title", content: "Listas personalizadas — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Crie listas de estudo sob medida e treine no seu ritmo.",
+      },
     ],
   }),
   component: Listas,
@@ -38,7 +42,11 @@ function Listas() {
       toast.error("Dê um nome para a sua lista.");
       return;
     }
-    criarLista({ nome: nome.trim(), areas: areas.length ? areas : AREAS.map((a) => a.id), quantidade });
+    criarLista({
+      nome: nome.trim(),
+      areas: areas.length ? areas : AREAS.map((a) => a.id),
+      quantidade,
+    });
     setNome("");
     setAreas([]);
     toast.success("Lista criada!");

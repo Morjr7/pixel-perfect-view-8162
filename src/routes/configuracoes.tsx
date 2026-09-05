@@ -9,9 +9,12 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/configuracoes")({
   head: () => ({
     meta: [
-      { title: "Configurações da conta — Acelera ENEM" },
-      { name: "description", content: "Ajuste meta diária, lembretes de estudo e preferências de acessibilidade." },
-      { property: "og:title", content: "Configurações da conta — Acelera ENEM" },
+      { title: "Configurações da conta — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Ajuste meta diária, lembretes de estudo e preferências de acessibilidade.",
+      },
+      { property: "og:title", content: "Configurações da conta — Jovens Educadores GIYV Estudos" },
       { property: "og:description", content: "Personalize sua rotina de estudos na plataforma." },
     ],
   }),
@@ -78,8 +81,8 @@ function Configuracoes() {
         <section className="panel p-5 lg:col-span-2">
           <h2 className="text-lg font-bold">Dados do estudo</h2>
           <p className="mt-1 text-sm text-muted-foreground">
-            Seu progresso fica salvo apenas neste navegador. Você pode recomeçar do zero quando quiser
-            — útil antes de apresentar o trabalho.
+            Seu progresso fica salvo apenas neste navegador. Você pode recomeçar do zero quando
+            quiser — útil antes de apresentar o trabalho.
           </p>
           <PopButton
             tone="danger"

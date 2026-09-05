@@ -4,15 +4,27 @@ import { Play, Clock } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/AppShell";
 import { PopButton } from "@/components/PopButton";
 import { AREAS, VIDEOS, areaBg, areaById, type AreaId } from "@/lib/enem-data";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 export const Route = createFileRoute("/videos")({
   head: () => ({
     meta: [
-      { title: "Videoaulas por área — Acelera ENEM" },
-      { name: "description", content: "Aulas curtas por área para revisar antes de treinar questões." },
-      { property: "og:title", content: "Videoaulas por área — Acelera ENEM" },
-      { property: "og:description", content: "Revisões rápidas de Matemática, Linguagens, Humanas e Natureza." },
+      { title: "Videoaulas por área — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Aulas curtas por área para revisar antes de treinar questões.",
+      },
+      { property: "og:title", content: "Videoaulas por área — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Revisões rápidas de Matemática, Linguagens, Humanas e Natureza.",
+      },
     ],
   }),
   component: Videos,
@@ -65,7 +77,12 @@ function Videos() {
                 </span>
                 <span>{v.professor}</span>
               </div>
-              <PopButton tone="action" size="block" className="mt-4" onClick={() => setAberto(v.id)}>
+              <PopButton
+                tone="action"
+                size="block"
+                className="mt-4"
+                onClick={() => setAberto(v.id)}
+              >
                 <Play className="size-4" aria-hidden /> Assistir
               </PopButton>
             </div>

@@ -10,10 +10,16 @@ import { useProgresso } from "@/lib/progresso";
 export const Route = createFileRoute("/comunidade")({
   head: () => ({
     meta: [
-      { title: "Comunidade de estudos — Acelera ENEM" },
-      { name: "description", content: "Compartilhe dicas, tire dúvidas e acompanhe grupos de estudo demonstrativos." },
-      { property: "og:title", content: "Comunidade de estudos — Acelera ENEM" },
-      { property: "og:description", content: "Feed de dicas, dúvidas e conquistas entre estudantes." },
+      { title: "Comunidade de estudos — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Compartilhe dicas, tire dúvidas e acompanhe grupos de estudo demonstrativos.",
+      },
+      { property: "og:title", content: "Comunidade de estudos — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Feed de dicas, dúvidas e conquistas entre estudantes.",
+      },
     ],
   }),
   component: Comunidade,
@@ -73,6 +79,14 @@ function Comunidade() {
             </PopButton>
           </div>
 
+          {posts.length === 0 && (
+            <div className="panel p-10 text-center">
+              <h2 className="text-lg font-bold">A comunidade ainda está começando</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Não há publicações reais neste momento. Crie a primeira publicação acima.
+              </p>
+            </div>
+          )}
           {posts.map((p) => (
             <article key={p.id} className="panel p-5">
               <div className="flex items-center gap-3">
@@ -108,22 +122,9 @@ function Comunidade() {
 
         <aside className="panel h-fit p-5">
           <h2 className="text-lg font-bold">Grupos de estudo</h2>
-          <ul className="mt-3 space-y-3 text-sm">
-            {[
-              { nome: "Matemática do zero", membros: 312, emoji: "📐" },
-              { nome: "Redação toda semana", membros: 208, emoji: "✍️" },
-              { nome: "Humanas sem medo", membros: 174, emoji: "🌍" },
-              { nome: "Plantão de dúvidas", membros: 429, emoji: "💬" },
-            ].map((g) => (
-              <li key={g.nome} className="flex items-center gap-3 rounded-xl border border-border p-3">
-                <span className="text-xl">{g.emoji}</span>
-                <span>
-                  <span className="block font-semibold">{g.nome}</span>
-                  <span className="text-xs text-muted-foreground">{g.membros} membros</span>
-                </span>
-              </li>
-            ))}
-          </ul>
+          <p className="mt-3 text-sm text-muted-foreground">
+            Grupos serão exibidos quando houver infraestrutura real para criação e participação.
+          </p>
         </aside>
       </div>
     </AppShell>

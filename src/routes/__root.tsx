@@ -79,14 +79,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Acelera ENEM — plataforma de estudos" },
+      { title: "Jovens Educadores GIYV Estudos — plataforma de estudos" },
       {
         name: "description",
         content:
           "Plataforma de preparação para o ENEM com questões, simulados, redação, tutores e ranking.",
       },
-      { name: "author", content: "Acelera ENEM" },
-      { property: "og:title", content: "Acelera ENEM — plataforma de estudos" },
+      { name: "author", content: "Jovens Educadores GIYV Estudos" },
+      { property: "og:title", content: "Jovens Educadores GIYV Estudos — plataforma de estudos" },
       {
         property: "og:description",
         content: "Questões, simulados, redação e estatísticas para estudar com consistência.",

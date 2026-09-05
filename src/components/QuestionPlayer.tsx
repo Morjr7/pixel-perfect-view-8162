@@ -121,7 +121,10 @@ export function QuestionPlayer({ questoes, titulo, modo, onFinalizar }: Props) {
           </span>
         </div>
 
-        <Progress value={((indice + (confirmada ? 1 : 0)) / questoes.length) * 100} className="mt-4" />
+        <Progress
+          value={((indice + (confirmada ? 1 : 0)) / questoes.length) * 100}
+          className="mt-4"
+        />
 
         <p className="mt-5 text-base leading-relaxed sm:text-lg">{questao.enunciado}</p>
 
@@ -163,8 +166,8 @@ export function QuestionPlayer({ questoes, titulo, modo, onFinalizar }: Props) {
               <Lightbulb className="size-4" aria-hidden /> Pista do tutor
             </strong>
             <p className="mt-1 text-muted-foreground">
-              Releia o enunciado buscando o conceito de <strong>{questao.assunto}</strong> e elimine as
-              alternativas que contradizem esse conceito. A resposta não é entregue aqui.
+              Releia o enunciado buscando o conceito de <strong>{questao.assunto}</strong> e elimine
+              as alternativas que contradizem esse conceito. A resposta não é entregue aqui.
             </p>
           </div>
         )}

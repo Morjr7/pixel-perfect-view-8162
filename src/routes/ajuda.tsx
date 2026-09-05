@@ -14,10 +14,16 @@ import {
 export const Route = createFileRoute("/ajuda")({
   head: () => ({
     meta: [
-      { title: "Ajuda e suporte — Acelera ENEM" },
-      { name: "description", content: "Perguntas frequentes, canal de suporte e dicas para usar a plataforma." },
-      { property: "og:title", content: "Ajuda e suporte — Acelera ENEM" },
-      { property: "og:description", content: "Tire dúvidas sobre treinos, simulados, redação e ranking." },
+      { title: "Ajuda e suporte — Jovens Educadores GIYV Estudos" },
+      {
+        name: "description",
+        content: "Perguntas frequentes, canal de suporte e dicas para usar a plataforma.",
+      },
+      { property: "og:title", content: "Ajuda e suporte — Jovens Educadores GIYV Estudos" },
+      {
+        property: "og:description",
+        content: "Tire dúvidas sobre treinos, simulados, redação e ranking.",
+      },
     ],
   }),
   component: Ajuda,
@@ -60,8 +66,12 @@ function Ajuda() {
             <Accordion type="single" collapsible className="mt-2">
               {FAQ.map((f, i) => (
                 <AccordionItem key={f.p} value={`item-${i}`}>
-                  <AccordionTrigger className="text-left text-sm font-semibold">{f.p}</AccordionTrigger>
-                  <AccordionContent className="text-sm text-muted-foreground">{f.r}</AccordionContent>
+                  <AccordionTrigger className="text-left text-sm font-semibold">
+                    {f.p}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-sm text-muted-foreground">
+                    {f.r}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -96,10 +106,34 @@ function Ajuda() {
           <div className="panel p-5">
             <h2 className="text-lg font-bold">Primeiros passos</h2>
             <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-muted-foreground">
-              <li>Escolha uma área em <Link to="/treinar" className="text-secondary hover:underline">Treinar</Link> e responda 10 questões.</li>
-              <li>Faça um <Link to="/simulados" className="text-secondary hover:underline">simulado</Link> de 10 questões para medir seu nível.</li>
-              <li>Escreva uma <Link to="/redacao" className="text-secondary hover:underline">redação</Link> e veja a nota por competência.</li>
-              <li>Acompanhe tudo em <Link to="/estatisticas" className="text-secondary hover:underline">Estatísticas</Link>.</li>
+              <li>
+                Escolha uma área em{" "}
+                <Link to="/treinar" className="text-secondary hover:underline">
+                  Treinar
+                </Link>{" "}
+                e responda 10 questões.
+              </li>
+              <li>
+                Faça um{" "}
+                <Link to="/simulados" className="text-secondary hover:underline">
+                  simulado
+                </Link>{" "}
+                de 10 questões para medir seu nível.
+              </li>
+              <li>
+                Escreva uma{" "}
+                <Link to="/redacao" className="text-secondary hover:underline">
+                  redação
+                </Link>{" "}
+                e veja a nota por competência.
+              </li>
+              <li>
+                Acompanhe tudo em{" "}
+                <Link to="/estatisticas" className="text-secondary hover:underline">
+                  Estatísticas
+                </Link>
+                .
+              </li>
             </ol>
           </div>
         </div>
