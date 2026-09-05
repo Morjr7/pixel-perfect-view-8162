@@ -42,6 +42,16 @@ function Estatisticas() {
   const stats = useEstatisticas();
 
   const dados = stats.porArea.map((p) => ({ nome: p.area.nome, aproveitamento: p.aproveitamento }));
+  const percentilEstimado =
+    stats.total === 0
+      ? 0
+      : Math.min(
+          99,
+          Math.max(
+            1,
+            Math.round(35 + Math.min(40, stats.total * 0.35) + stats.aproveitamento * 0.24),
+          ),
+        );
 
   const dias = Array.from({ length: 7 }, (_, i) => {
     const d = new Date(Date.now() - (6 - i) * 86400000);
@@ -74,6 +84,24 @@ function Estatisticas() {
             <div className="text-sm text-muted-foreground">{c.l}</div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-4 panel-strong p-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-bold">Comparativo de desempenho</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Estimativa pedagógica baseada em volume de questões e aproveitamento; não é um dado
+              oficial do ENEM.
+            </p>
+          </div>
+          <div className="text-right">
+            <span className="text-3xl font-black text-secondary">
+              {percentilEstimado ? `Top ${100 - percentilEstimado + 1}%` : "—"}
+            </span>
+            <p className="text-xs text-muted-foreground">faixa estimada</p>
+          </div>
+        </div>
       </div>
 
       <div className="mt-6 grid gap-5 lg:grid-cols-2">

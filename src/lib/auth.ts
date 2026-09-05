@@ -4,6 +4,7 @@ export type LocalUser = {
   birthDate: string;
   bestFriendHash: string;
   firstPetHash: string;
+  curso?: string;
   createdAt: string;
 };
 
@@ -38,6 +39,7 @@ export async function registerUser(input: {
   birthDate: string;
   bestFriend: string;
   firstPet: string;
+  curso: string;
 }) {
   const username = input.username.trim();
   const users = readUsers();
@@ -47,7 +49,12 @@ export async function registerUser(input: {
   if (username.length < 3)
     throw new Error("O nome de usuário precisa ter pelo menos 3 caracteres.");
   if (input.password.length < 6) throw new Error("A senha precisa ter pelo menos 6 caracteres.");
-  if (!input.birthDate || !input.bestFriend.trim() || !input.firstPet.trim()) {
+  if (
+    !input.birthDate ||
+    !input.bestFriend.trim() ||
+    !input.firstPet.trim() ||
+    !input.curso.trim()
+  ) {
     throw new Error("Preencha todos os campos obrigatórios.");
   }
 
@@ -57,6 +64,7 @@ export async function registerUser(input: {
     birthDate: input.birthDate,
     bestFriendHash: await hashSecret(input.bestFriend),
     firstPetHash: await hashSecret(input.firstPet),
+    curso: input.curso.trim(),
     createdAt: new Date().toISOString(),
   };
   writeUsers([...users, user]);

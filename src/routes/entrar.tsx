@@ -35,6 +35,7 @@ function Entrar() {
   const [birthDate, setBirthDate] = useState("");
   const [bestFriend, setBestFriend] = useState("");
   const [firstPet, setFirstPet] = useState("");
+  const [curso, setCurso] = useState("");
 
   const limparErro = () => setErro("");
   const trocarModo = (novoModo: Modo) => {
@@ -43,8 +44,8 @@ function Entrar() {
     limparErro();
   };
 
-  const entrarNaPlataforma = (nome: string) => {
-    entrar(nome, `${username.trim().toLocaleLowerCase("pt-BR")}@acelera.local`);
+  const entrarNaPlataforma = (nome: string, cursoSalvo = "") => {
+    entrar(nome, `${username.trim().toLocaleLowerCase("pt-BR")}@acelera.local`, cursoSalvo);
     toast.success("Bem-vindo de volta!");
     navigate({ to: "/" });
   };
@@ -55,7 +56,7 @@ function Entrar() {
     setBusy(true);
     try {
       const user = await authenticateUser(username, password);
-      entrarNaPlataforma(user.username);
+      entrarNaPlataforma(user.username, user.curso);
     } catch (error) {
       setErro(error instanceof Error ? error.message : "Não foi possível entrar.");
     } finally {
@@ -69,8 +70,19 @@ function Entrar() {
       return setErro("A confirmação da senha precisa ser igual à senha.");
     setBusy(true);
     try {
-      const user = await registerUser({ username, password, birthDate, bestFriend, firstPet });
-      entrar(user.username, `${user.username.toLocaleLowerCase("pt-BR")}@acelera.local`);
+      const user = await registerUser({
+        username,
+        password,
+        birthDate,
+        bestFriend,
+        firstPet,
+        curso,
+      });
+      entrar(
+        user.username,
+        `${user.username.toLocaleLowerCase("pt-BR")}@acelera.local`,
+        user.curso,
+      );
       toast.success("Conta criada com sucesso!");
       navigate({ to: "/" });
     } catch (error) {
@@ -208,6 +220,45 @@ function Entrar() {
 
               {modo === "cadastro" && (
                 <>
+                  <label className="block text-sm">
+                    <span className="mb-1 block font-semibold">Curso que você deseja cursar</span>
+                    <input
+                      value={curso}
+                      onChange={(e) => setCurso(e.target.value)}
+                      list="cursos-de-interesse"
+                      placeholder="Ex.: Economia, Medicina ou Arquitetura"
+                      className="w-full rounded-xl border border-border bg-muted/30 px-3 py-2.5 outline-none focus:ring-2 focus:ring-ring"
+                    />
+                    <datalist id="cursos-de-interesse">
+                      {[
+                        "Administração",
+                        "Arquitetura",
+                        "Ciência da Computação",
+                        "Ciências Biológicas",
+                        "Ciências Contábeis",
+                        "Direito",
+                        "Economia",
+                        "Educação Física",
+                        "Enfermagem",
+                        "Engenharia",
+                        "Farmácia",
+                        "Fisioterapia",
+                        "Jornalismo",
+                        "Medicina",
+                        "Nutrição",
+                        "Odontologia",
+                        "Pedagogia",
+                        "Psicologia",
+                        "Publicidade",
+                        "Relações Internacionais",
+                        "Serviço Social",
+                        "Veterinária",
+                        "Outro curso",
+                      ].map((item) => (
+                        <option key={item} value={item} />
+                      ))}
+                    </datalist>
+                  </label>
                   <label className="block text-sm">
                     <span className="mb-1 block font-semibold">Data de nascimento</span>
                     <input

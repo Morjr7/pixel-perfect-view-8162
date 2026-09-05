@@ -27,6 +27,7 @@ function Perfil() {
   const { estado, atualizarPerfil, sair } = useProgresso();
   const stats = useEstatisticas();
   const [nome, setNome] = useState(estado.nome);
+  const [curso, setCurso] = useState(estado.curso);
   const posicao = RANKING.filter((r) => r.xp > estado.xp).length + 1;
   const medalhas = CONQUISTAS.filter((c) =>
     c.tipo === "questoes"
@@ -51,6 +52,9 @@ function Perfil() {
           </div>
           <h2 className="mt-4 text-xl font-bold">{estado.nome}</h2>
           <p className="text-sm text-muted-foreground">{estado.email}</p>
+          <p className="mt-2 text-sm font-semibold text-secondary">
+            {estado.curso ? `Desejo cursar ${estado.curso}` : "Escolha um curso de interesse"}
+          </p>
           <div className="mt-4 flex flex-wrap justify-center gap-2">
             {AVATARES.map((a) => (
               <button
@@ -71,12 +75,41 @@ function Perfil() {
             aria-label="Nome de exibição"
             className="mt-4 w-full rounded-xl border border-border bg-muted/30 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
           />
+          <input
+            value={curso}
+            onChange={(e) => setCurso(e.target.value)}
+            list="perfil-cursos"
+            aria-label="Curso de interesse"
+            placeholder="Curso de interesse"
+            className="mt-2 w-full rounded-xl border border-border bg-muted/30 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
+          />
+          <datalist id="perfil-cursos">
+            {[
+              "Administração",
+              "Arquitetura",
+              "Ciência da Computação",
+              "Direito",
+              "Economia",
+              "Enfermagem",
+              "Engenharia",
+              "Medicina",
+              "Nutrição",
+              "Odontologia",
+              "Pedagogia",
+              "Psicologia",
+              "Publicidade",
+              "Veterinária",
+              "Outro curso",
+            ].map((item) => (
+              <option key={item} value={item} />
+            ))}
+          </datalist>
           <PopButton
             tone="action"
             size="block"
             className="mt-3"
             onClick={() => {
-              atualizarPerfil({ nome });
+              atualizarPerfil({ nome, curso: curso.trim() });
               toast.success("Perfil atualizado");
             }}
           >

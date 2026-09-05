@@ -54,6 +54,7 @@ export type Estado = {
   nome: string;
   email: string;
   avatar: string;
+  curso: string;
   logado: boolean;
   xp: number;
   ofensiva: number;
@@ -74,6 +75,7 @@ const inicial: Estado = {
   nome: "",
   email: "",
   avatar: "🧑‍🎓",
+  curso: "",
   logado: false,
   xp: 0,
   ofensiva: 0,
@@ -213,7 +215,7 @@ type Ctx = {
   estado: Estado;
   pronto: boolean;
   responder: (r: Omit<Resposta, "data">) => void;
-  entrar: (nome: string, email: string) => void;
+  entrar: (nome: string, email: string, curso?: string) => void;
   sair: () => void;
   salvarRedacao: (tema: string, texto: string) => Redacao;
   criarLista: (l: Omit<ListaPersonalizada, "id" | "criadaEm" | "concluidas">) => void;
@@ -268,18 +270,24 @@ export function ProgressoProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const entrar = useCallback((nome: string, email: string) => {
+  const entrar = useCallback((nome: string, email: string, curso = "") => {
     const id = email.trim().toLocaleLowerCase("pt-BR");
     try {
       const salvo = localStorage.getItem(`${PREFIXO_CONTA}${id}`);
       const conta = salvo ? { ...inicial, ...JSON.parse(salvo) } : { ...inicial };
-      const atual = { ...conta, logado: true, nome: nome.trim(), email: id };
+      const atual = {
+        ...conta,
+        logado: true,
+        nome: nome.trim(),
+        email: id,
+        curso: curso || conta.curso || "",
+      };
       localStorage.setItem(SESSAO_ATUAL, id);
       localStorage.setItem(`${PREFIXO_CONTA}${id}`, JSON.stringify(atual));
       setContaAtual(id);
       setEstado(atual);
     } catch {
-      setEstado((e) => ({ ...e, logado: true, nome: nome.trim(), email: id }));
+      setEstado((e) => ({ ...e, logado: true, nome: nome.trim(), email: id, curso }));
     }
   }, []);
 
@@ -347,6 +355,7 @@ export function ProgressoProvider({ children }: { children: ReactNode }) {
         nome: e.nome,
         email: e.email,
         avatar: e.avatar,
+        curso: e.curso,
         logado: true,
       })),
     [],

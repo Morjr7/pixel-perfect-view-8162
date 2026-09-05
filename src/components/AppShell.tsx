@@ -88,6 +88,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
 export function AppShell({ children }: { children: ReactNode }) {
   const { estado } = useProgresso();
   const [aberto, setAberto] = useState(false);
+  const [notificacoesAbertas, setNotificacoesAbertas] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
 
@@ -136,12 +137,45 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Star className="size-4 text-warning" aria-hidden />
               {estado.xp}
             </span>
-            <button
-              aria-label="Notificações"
-              className="hidden size-9 place-items-center rounded-xl border border-border sm:grid"
-            >
-              <Bell className="size-4" />
-            </button>
+            <div className="relative hidden sm:block">
+              <button
+                aria-label="Notificações"
+                onClick={() => setNotificacoesAbertas((abertas) => !abertas)}
+                className="grid size-9 place-items-center rounded-xl border border-border"
+              >
+                <Bell className="size-4" />
+                {(estado.respostas.length > 0 || estado.redacoes.length > 0) && (
+                  <span className="absolute right-0 top-0 size-2 rounded-full bg-secondary" />
+                )}
+              </button>
+              {notificacoesAbertas && (
+                <div className="absolute right-0 top-11 z-50 w-72 rounded-2xl border border-border bg-popover p-4 text-sm shadow-pop-lg">
+                  <div className="flex items-center justify-between">
+                    <strong>Notificações</strong>
+                    <button
+                      className="text-xs text-secondary"
+                      onClick={() => setNotificacoesAbertas(false)}
+                    >
+                      Fechar
+                    </button>
+                  </div>
+                  <div className="mt-3 space-y-2 text-muted-foreground">
+                    {estado.respostas.length === 0 && estado.redacoes.length === 0 ? (
+                      <p>Você ainda não tem novidades.</p>
+                    ) : (
+                      <>
+                        <p>Você já respondeu {estado.respostas.length} questões.</p>
+                        <p>
+                          {estado.redacoes.length
+                            ? `Você tem ${estado.redacoes.length} redação(ões) corrigida(s).`
+                            : "Escreva uma redação para receber uma devolutiva."}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
             <Link
               to="/perfil"
               className="flex items-center gap-2 rounded-xl border border-border px-2 py-1.5"

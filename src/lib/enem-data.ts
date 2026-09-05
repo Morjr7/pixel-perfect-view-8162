@@ -656,6 +656,38 @@ export const CONQUISTAS: Conquista[] = [
     meta: 60,
     tipo: "acertos",
   },
+  {
+    id: "c9",
+    titulo: "Constância de ferro",
+    descricao: "Mantenha 14 dias de ofensiva",
+    emoji: "🛡️",
+    meta: 14,
+    tipo: "ofensiva",
+  },
+  {
+    id: "c10",
+    titulo: "Voz autoral",
+    descricao: "Conclua 10 redações",
+    emoji: "🪶",
+    meta: 10,
+    tipo: "redacoes",
+  },
+  {
+    id: "c11",
+    titulo: "Ritmo de prova",
+    descricao: "Conclua 5 simulados",
+    emoji: "🏆",
+    meta: 5,
+    tipo: "simulados",
+  },
+  {
+    id: "c12",
+    titulo: "Precisão de elite",
+    descricao: "Acerte 100 questões",
+    emoji: "💎",
+    meta: 100,
+    tipo: "acertos",
+  },
 ];
 
 export type PostComunidade = {
@@ -667,6 +699,8 @@ export type PostComunidade = {
   curtidas: number;
   comentarios: number;
   tag: string;
+  curso?: string;
+  comentariosLista?: { id: string; autor: string; avatar: string; texto: string }[];
 };
 
 export const POSTS: PostComunidade[] = [];
