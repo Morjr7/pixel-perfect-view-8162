@@ -1,5 +1,7 @@
 export type AreaId = "linguagens" | "humanas" | "matematica" | "natureza";
 
+import { QUESTOES_EXTRAS } from "./questoes/extras";
+
 export type Area = {
   id: AreaId;
   nome: string;
@@ -316,7 +318,13 @@ export const QUESTOES: Questao[] = [
     "ENEM 2022 — questão 92",
     "facil",
     "Em uma cadeia alimentar, as plantas ocupam o nível dos:",
-    ["Decompositores", "Produtores", "Consumidores primários", "Consumidores secundários", "Parasitas"],
+    [
+      "Decompositores",
+      "Produtores",
+      "Consumidores primários",
+      "Consumidores secundários",
+      "Parasitas",
+    ],
     1,
     "Plantas realizam fotossíntese e produzem matéria orgânica: são produtoras.",
   ),
@@ -423,6 +431,7 @@ export const QUESTOES: Questao[] = [
     1,
     "Óxidos de enxofre e de nitrogênio reagem com a água da atmosfera formando ácidos.",
   ),
+  ...QUESTOES_EXTRAS,
 ];
 
 export const questoesPorArea = (area: AreaId) => QUESTOES.filter((x) => x.area === area);
@@ -447,7 +456,7 @@ export const TUTORES: Tutor[] = [
   },
   {
     id: "rafael",
-    nome: "Rafael Nunes",
+    nome: "Guilherme Moreno",
     area: "matematica",
     papel: "Tutor de Matemática",
     emoji: "📐",
@@ -455,7 +464,7 @@ export const TUTORES: Tutor[] = [
   },
   {
     id: "clara",
-    nome: "Clara Bittencourt",
+    nome: "Isabella Macedo",
     area: "linguagens",
     papel: "Tutora de Linguagens",
     emoji: "📚",
@@ -471,7 +480,7 @@ export const TUTORES: Tutor[] = [
   },
   {
     id: "helena",
-    nome: "Helena Prado",
+    nome: "Valentina Castro",
     area: "redacao",
     papel: "Corretora de Redação",
     emoji: "✍️",
@@ -540,11 +549,26 @@ export const VIDEOS: Video[] = [
 ];
 
 export const TEMAS_REDACAO = [
+  "Perspectivas acerca do envelhecimento na sociedade brasileira",
+  "Desafios para a valorização da herança africana no Brasil",
+  "Desafios para o enfrentamento da invisibilidade do trabalho de cuidado realizado pela mulher no Brasil",
+  "Desafios para a valorização de comunidades e povos tradicionais no Brasil",
+  "Invisibilidade e registro civil: garantia de acesso à cidadania no Brasil",
+  "O estigma associado às doenças mentais na sociedade brasileira",
+  "Democratização do acesso ao cinema no Brasil",
+  "Manipulação do comportamento do usuário pelo controle de dados na internet",
+  "Desafios para a formação educacional de surdos no Brasil",
+  "Caminhos para combater a intolerância religiosa no Brasil",
   "Caminhos para combater a desinformação nas redes sociais no Brasil",
   "Desafios para a valorização da saúde mental entre jovens estudantes",
   "O impacto da inteligência artificial no mundo do trabalho brasileiro",
-  "Мobilidade urbana e o direito à cidade",
+  "Mobilidade urbana e o direito à cidade",
   "Preservação das línguas indígenas como patrimônio cultural",
+  "Desafios para a inclusão digital de estudantes brasileiros",
+  "Segurança alimentar e combate ao desperdício no Brasil",
+  "A importância da educação financeira para a juventude",
+  "Desafios para a proteção de biomas brasileiros",
+  "O papel da ciência no enfrentamento de problemas sociais",
 ];
 
 export type RankingItem = {
@@ -579,14 +603,70 @@ export type Conquista = {
 };
 
 export const CONQUISTAS: Conquista[] = [
-  { id: "c1", titulo: "Primeiros passos", descricao: "Responda sua 1ª questão", emoji: "👟", meta: 1, tipo: "questoes" },
-  { id: "c2", titulo: "Aquecendo", descricao: "Responda 10 questões", emoji: "🔥", meta: 10, tipo: "questoes" },
-  { id: "c3", titulo: "Maratonista", descricao: "Responda 50 questões", emoji: "🏃", meta: 50, tipo: "questoes" },
-  { id: "c4", titulo: "Pontaria boa", descricao: "Acerte 25 questões", emoji: "🎯", meta: 25, tipo: "acertos" },
-  { id: "c5", titulo: "Semana consistente", descricao: "7 dias de ofensiva", emoji: "📅", meta: 7, tipo: "ofensiva" },
-  { id: "c6", titulo: "Escritor treinado", descricao: "Envie 3 redações", emoji: "✍️", meta: 3, tipo: "redacoes" },
-  { id: "c7", titulo: "Simulado na veia", descricao: "Conclua 2 simulados", emoji: "🧠", meta: 2, tipo: "simulados" },
-  { id: "c8", titulo: "Mestre da revisão", descricao: "Acerte 60 questões", emoji: "👑", meta: 60, tipo: "acertos" },
+  {
+    id: "c1",
+    titulo: "Primeiros passos",
+    descricao: "Responda sua 1ª questão",
+    emoji: "👟",
+    meta: 1,
+    tipo: "questoes",
+  },
+  {
+    id: "c2",
+    titulo: "Aquecendo",
+    descricao: "Responda 10 questões",
+    emoji: "🔥",
+    meta: 10,
+    tipo: "questoes",
+  },
+  {
+    id: "c3",
+    titulo: "Maratonista",
+    descricao: "Responda 50 questões",
+    emoji: "🏃",
+    meta: 50,
+    tipo: "questoes",
+  },
+  {
+    id: "c4",
+    titulo: "Pontaria boa",
+    descricao: "Acerte 25 questões",
+    emoji: "🎯",
+    meta: 25,
+    tipo: "acertos",
+  },
+  {
+    id: "c5",
+    titulo: "Semana consistente",
+    descricao: "7 dias de ofensiva",
+    emoji: "📅",
+    meta: 7,
+    tipo: "ofensiva",
+  },
+  {
+    id: "c6",
+    titulo: "Escritor treinado",
+    descricao: "Envie 3 redações",
+    emoji: "✍️",
+    meta: 3,
+    tipo: "redacoes",
+  },
+  {
+    id: "c7",
+    titulo: "Simulado na veia",
+    descricao: "Conclua 2 simulados",
+    emoji: "🧠",
+    meta: 2,
+    tipo: "simulados",
+  },
+  {
+    id: "c8",
+    titulo: "Mestre da revisão",
+    descricao: "Acerte 60 questões",
+    emoji: "👑",
+    meta: 60,
+    tipo: "acertos",
+  },
 ];
 
 export type PostComunidade = {
