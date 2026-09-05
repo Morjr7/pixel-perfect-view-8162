@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BookOpenText, Check, FileText, Save, Send, Trash2 } from "lucide-react";
+import { BookOpenText, Check, FileText, Save, Send, Shuffle, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { AppShell, PageHeader } from "@/components/AppShell";
 import { PopButton } from "@/components/PopButton";
@@ -70,6 +70,16 @@ function Redacao() {
   const palavras = texto.trim().split(/\s+/).filter(Boolean).length;
   const linhas = texto ? texto.split(/\n/).length : 0;
   const ultima = estado.redacoes[0];
+  const media = estado.redacoes.length
+    ? Math.round(estado.redacoes.reduce((s, r) => s + r.total, 0) / estado.redacoes.length)
+    : 0;
+  const melhor = estado.redacoes.length ? Math.max(...estado.redacoes.map((r) => r.total)) : 0;
+  const mediaCompetencias = COMPETENCIAS.map((c) => ({
+    ...c,
+    nota: estado.redacoes.length
+      ? Math.round(estado.redacoes.reduce((s, r) => s + r.notas[c.id], 0) / estado.redacoes.length)
+      : 0,
+  }));
 
   const selecionarTema = (novoTema: string) => {
     setTema(novoTema);
@@ -143,6 +153,48 @@ function Redacao() {
 
       {aba === "temas" && (
         <section>
+          <div className="mb-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {[
+              ["Redações corrigidas", estado.redacoes.length || "—"],
+              ["Nota média", estado.redacoes.length ? `${media}/1000` : "—"],
+              ["Melhor nota", estado.redacoes.length ? `${melhor}/1000` : "—"],
+              ["Última correção", ultima ? new Date(ultima.data).toLocaleDateString("pt-BR") : "—"],
+            ].map(([label, value]) => (
+              <div key={label} className="panel p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                  {label}
+                </p>
+                <p className="mt-2 text-2xl font-black text-secondary">{value}</p>
+              </div>
+            ))}
+          </div>
+          <div className="panel mb-5 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="font-bold">Média por competência</h2>
+                <p className="text-xs text-muted-foreground">
+                  Sem redações corrigidas, nenhuma nota é inventada.
+                </p>
+              </div>
+              <button
+                className="inline-flex items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-sm font-bold text-secondary-foreground transition hover:opacity-90"
+                onClick={() =>
+                  selecionarTema(TEMAS_REDACAO[Math.floor(Math.random() * TEMAS_REDACAO.length)]!)
+                }
+              >
+                <Shuffle className="size-4" /> Sortear tema aleatório
+              </button>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-5">
+              {mediaCompetencias.map((c) => (
+                <div key={c.id} className="rounded-xl bg-muted/40 p-3 text-center">
+                  <p className="text-xs font-bold text-muted-foreground">{c.id.toUpperCase()}</p>
+                  <p className="mt-1 text-lg font-black">{c.nota || "—"}</p>
+                  <Progress value={(c.nota / 200) * 100} className="mt-2 h-1.5" />
+                </div>
+              ))}
+            </div>
+          </div>
           <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
             <div>
               <h2 className="text-xl font-bold">Temas de redação</h2>
@@ -294,6 +346,21 @@ function Redacao() {
                       );
                     })}
                   </ul>
+                  {ultima.avaliacao && (
+                    <div className="mt-5 space-y-3 border-t border-border pt-4">
+                      <p className="text-sm leading-6 text-muted-foreground">
+                        {ultima.avaliacao.resumo}
+                      </p>
+                      <div className="rounded-xl bg-secondary/10 p-3">
+                        <p className="text-sm font-bold">Como melhorar na próxima redação</p>
+                        <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-muted-foreground">
+                          {ultima.avaliacao.recomendacoes.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </>
               )}
             </div>

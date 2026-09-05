@@ -47,12 +47,14 @@ export function QuestionPlayer({ questoes, titulo, modo, onFinalizar }: Props) {
     setConfirmada(false);
     setPista(false);
     if (indice + 1 < questoes.length) setIndice(indice + 1);
-    else finalizar();
+    else finalizar(_e);
   };
 
-  const finalizar = () => {
+  const finalizar = (ultimaEscolha?: number) => {
     setTerminou(true);
-    const acertosFinais = questoes.filter((qq) => respostas[qq.id] === qq.correta).length;
+    const respostasFinais =
+      ultimaEscolha === undefined ? respostas : { ...respostas, [questao.id]: ultimaEscolha };
+    const acertosFinais = questoes.filter((qq) => respostasFinais[qq.id] === qq.correta).length;
     onFinalizar?.(acertosFinais, questoes.length);
   };
 
@@ -239,7 +241,7 @@ export function QuestionPlayer({ questoes, titulo, modo, onFinalizar }: Props) {
             </div>
           </dl>
         </div>
-        {chat && <TutorChat area={questao.area} contexto={questao.assunto} />}
+        {chat && <TutorChat area={questao.area} contexto={questao.assunto} questao={questao} />}
       </aside>
     </div>
   );

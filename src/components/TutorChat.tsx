@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Send } from "lucide-react";
-import { TUTORES, type AreaId } from "@/lib/enem-data";
+import { TUTORES, type AreaId, type Questao } from "@/lib/enem-data";
 import { PopButton } from "@/components/PopButton";
+import { useProgresso } from "@/lib/progresso";
 
 type Msg = { de: "tutor" | "eu"; texto: string };
 
@@ -11,8 +12,20 @@ const respostasPorPista = [
   "Leia novamente o contexto antes de escolher. Em questões do ENEM, a alternativa correta costuma relacionar o conteúdo estudado a uma situação social, histórica ou cotidiana.",
 ];
 
-function criarResposta(pergunta: string, area: AreaId | "redacao" | "geral", contexto?: string) {
+function criarResposta(
+  pergunta: string,
+  area: AreaId | "redacao" | "geral",
+  contexto?: string,
+  questao?: Questao,
+) {
   const texto = pergunta.toLocaleLowerCase("pt-BR");
+  if (questao && /(resposta|alternativa|gabarito|acerto|qual|resultado)/.test(texto)) {
+    const letra = ["A", "B", "C", "D", "E"][questao.correta];
+    return `Resposta guiada: a alternativa ${letra} é a correta. ${questao.explicacao} Primeiro tente explicar com suas palavras qual dado do enunciado elimina as outras alternativas.`;
+  }
+  if (questao && /(explica|não entendi|nao entendi|dúvida|duvida|como fazer)/.test(texto)) {
+    return `Vamos analisar esta questão de ${questao.assunto}. O enunciado pede: “${questao.enunciado}” ${questao.explicacao} Agora confira em qual etapa da sua conta ou interpretação você chegou a uma conclusão diferente.`;
+  }
   if (area === "redacao" && /(tese|introdução|introducao)/.test(texto)) {
     return "Para construir a tese, apresente uma resposta direta ao problema do tema e antecipe dois recortes que serão desenvolvidos. Evite apenas repetir o título: indique a sua posição e os fatores que a sustentam.";
   }
@@ -39,20 +52,23 @@ function criarResposta(pergunta: string, area: AreaId | "redacao" | "geral", con
 export function TutorChat({
   area,
   contexto,
+  questao,
   alto = false,
 }: {
   area: AreaId | "redacao" | "geral";
   contexto?: string;
+  questao?: Questao;
   alto?: boolean;
 }) {
+  const { estado } = useProgresso();
   const tutor = TUTORES.find((t) => t.area === area) ?? TUTORES[0]!;
-  const storageKey = `acelera-chat-${area}`;
+  const storageKey = `giyv-chat-${estado.email || "visitante"}-${area}-${questao?.id || "geral"}`;
   const mensagemInicial = useMemo<Msg>(
     () => ({
       de: "tutor",
-      texto: `Oi! Sou ${tutor.nome}, ${tutor.papel.toLowerCase()}. ${contexto ? `Podemos destravar “${contexto}” juntos.` : "Me conte onde você travou."} Faça uma pergunta e eu vou adaptar a explicação ao seu raciocínio.`,
+      texto: `Oi! Sou ${tutor.nome}, ${tutor.papel.toLowerCase()}. ${questao ? `Estou olhando a questão de ${questao.assunto}.` : contexto ? `Podemos destravar “${contexto}” juntos.` : "Me conte onde você travou."} Faça uma pergunta e eu vou adaptar a explicação ao seu raciocínio.`,
     }),
-    [contexto, tutor.nome, tutor.papel],
+    [contexto, questao, tutor.nome, tutor.papel],
   );
   const [msgs, setMsgs] = useState<Msg[]>(() => {
     try {
@@ -76,7 +92,10 @@ export function TutorChat({
     setRespondendo(true);
     setMsgs((m) => [...m, { de: "eu", texto: pergunta }]);
     window.setTimeout(() => {
-      setMsgs((m) => [...m, { de: "tutor", texto: criarResposta(pergunta, area, contexto) }]);
+      setMsgs((m) => [
+        ...m,
+        { de: "tutor", texto: criarResposta(pergunta, area, contexto, questao) },
+      ]);
       setRespondendo(false);
     }, 350);
   };

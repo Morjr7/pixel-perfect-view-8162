@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Flame, Star } from "lucide-react";
 import { AppShell, PageHeader } from "@/components/AppShell";
 import { PopButton } from "@/components/PopButton";
-import { RANKING } from "@/lib/enem-data";
 import { useProgresso } from "@/lib/progresso";
 
 export const Route = createFileRoute("/ranking")({
@@ -28,13 +27,41 @@ function Ranking() {
   const { estado } = useProgresso();
   const [periodo, setPeriodo] = useState<"semana" | "mes" | "geral">("semana");
 
-  const lista = RANKING.map((r) =>
-    r.eu
-      ? { ...r, nome: estado.nome, xp: estado.xp, ofensiva: estado.ofensiva, avatar: estado.avatar }
-      : r,
-  )
-    .sort((a, b) => b.xp - a.xp)
-    .map((r, i) => ({ ...r, pos: i + 1 }));
+  const lista = useMemo(() => {
+    const contas = new Map<
+      string,
+      { nome: string; xp: number; ofensiva: number; avatar: string }
+    >();
+    if (typeof window !== "undefined") {
+      for (let i = 0; i < localStorage.length; i += 1) {
+        const chave = localStorage.key(i);
+        if (!chave?.startsWith("giyv-conta-v1:")) continue;
+        try {
+          const conta = JSON.parse(localStorage.getItem(chave) || "{}");
+          if (conta.email)
+            contas.set(conta.email, {
+              nome: conta.nome,
+              xp: conta.xp || 0,
+              ofensiva: conta.ofensiva || 0,
+              avatar: conta.avatar || "🧑‍🎓",
+            });
+        } catch {
+          /* ignora conta local inválida */
+        }
+      }
+    }
+    if (estado.email)
+      contas.set(estado.email, {
+        nome: estado.nome,
+        xp: estado.xp,
+        ofensiva: estado.ofensiva,
+        avatar: estado.avatar,
+      });
+    return [...contas.entries()]
+      .map(([email, conta]) => ({ ...conta, email, eu: email === estado.email }))
+      .sort((a, b) => b.xp - a.xp || a.nome.localeCompare(b.nome, "pt-BR"))
+      .map((r, i) => ({ ...r, pos: i + 1 }));
+  }, [estado]);
 
   return (
     <AppShell>
@@ -64,6 +91,11 @@ function Ranking() {
             aqui.
           </p>
         </div>
+      )}
+      {lista.length === 1 && (
+        <p className="mb-4 text-sm text-muted-foreground">
+          Você está em 1º lugar. O ranking local mostra apenas contas reais deste dispositivo.
+        </p>
       )}
 
       <div className="mb-6 grid gap-4 sm:grid-cols-3">

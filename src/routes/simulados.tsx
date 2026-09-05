@@ -32,15 +32,32 @@ function Simulados() {
   const [escopo, setEscopo] = useState<Escopo>("geral");
   const [quantidade, setQuantidade] = useState(10);
   const [rodando, setRodando] = useState(false);
+  const [semente, setSemente] = useState(() => Date.now());
 
   const disponiveis = useMemo(
     () => (escopo === "geral" ? QUESTOES : QUESTOES.filter((q) => q.area === escopo)),
     [escopo],
   );
-  const selecionadas = useMemo(
-    () => disponiveis.slice(0, Math.min(quantidade, disponiveis.length)),
-    [disponiveis, quantidade],
-  );
+  const selecionadas = useMemo(() => {
+    const lista = [...disponiveis];
+    let estadoSemente = semente;
+    for (let i = lista.length - 1; i > 0; i -= 1) {
+      estadoSemente = (estadoSemente * 1664525 + 1013904223) >>> 0;
+      const j = estadoSemente % (i + 1);
+      [lista[i], lista[j]] = [lista[j], lista[i]];
+    }
+    const limite = Math.min(quantidade, lista.length);
+    const amostra = lista.slice(0, limite);
+    const anterior = estado.simulados[0]?.questoesIds;
+    if (
+      amostra.length > 1 &&
+      anterior?.length === amostra.length &&
+      amostra.every((q, i) => q.id === anterior[i])
+    ) {
+      [amostra[0], amostra[1]] = [amostra[1]!, amostra[0]!];
+    }
+    return amostra;
+  }, [disponiveis, quantidade, semente, estado.simulados]);
 
   const nomeEscopo =
     escopo === "geral" ? "Simulado Geral" : AREAS.find((a) => a.id === escopo)!.nome;
@@ -54,7 +71,12 @@ function Simulados() {
           titulo={nomeEscopo}
           modo="simulado"
           onFinalizar={(acertos, total) => {
-            registrarSimulado({ nome: nomeEscopo, acertos, total });
+            registrarSimulado({
+              nome: nomeEscopo,
+              acertos,
+              total,
+              questoesIds: selecionadas.map((q) => q.id),
+            });
             toast.success(`Simulado concluído: ${acertos}/${total} acertos`);
           }}
         />
@@ -174,7 +196,10 @@ function Simulados() {
             size="block"
             className="mt-5"
             disabled={selecionadas.length === 0}
-            onClick={() => setRodando(true)}
+            onClick={() => {
+              setSemente(Date.now() + estado.simulados.length * 7919);
+              setRodando(true);
+            }}
           >
             Começar simulado
           </PopButton>
